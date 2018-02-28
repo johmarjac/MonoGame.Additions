@@ -5,6 +5,12 @@ namespace MonoGame.Entities
 {
     public abstract class ComponentSystem : IDisposable
     {
+        public virtual void OnEntityCreated(Entity entity) { }
+        public virtual void OnEntityDestroyed(Entity entity) { }
+
+        //public virtual void OnEntityComponentAttached(Entity entity, EntityComponent component) { }
+        //public virtual void OnEntityComponentDetached(Entity entity, EntityComponent component) { }
+
         public virtual void UpdateEntity(Entity entity, GameTime gameTime) { }
         public virtual void DrawEntity(Entity entity, GameTime gameTime) { }
 

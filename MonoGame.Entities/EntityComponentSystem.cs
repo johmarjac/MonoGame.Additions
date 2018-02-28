@@ -46,6 +46,9 @@ namespace MonoGame.Entities
         {
             var entity = new T();
 
+            foreach (var system in _componentSystems)
+                system.Value.ComponentSystem.OnEntityCreated(entity);
+
             _entities.Add(entity);
 
             return entity;
@@ -55,6 +58,9 @@ namespace MonoGame.Entities
         {
             if (entity == null)
                 throw new ArgumentNullException(nameof(entity));
+
+            foreach (var system in _componentSystems)
+                system.Value.ComponentSystem.OnEntityDestroyed(entity);
 
             if (!_entities.Remove(entity))
                 throw new ArgumentException("Specified entity was not found.");
