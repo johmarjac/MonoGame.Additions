@@ -11,13 +11,15 @@ namespace MonoGame.Entities
             _components = new ConcurrentDictionary<Type, EntityComponent>();
         }
 
-        public void Attach<T>() where T : EntityComponent, new()
+        public T Attach<T>() where T : EntityComponent, new()
         {
             var type = typeof(T);
             var obj = new T();
 
             if (!_components.TryAdd(type, obj))
                 throw new ArgumentException("Component with this type already exists.");
+
+            return obj;
         }
 
         public void Detach<T>() where T : EntityComponent
