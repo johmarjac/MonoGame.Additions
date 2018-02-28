@@ -42,9 +42,9 @@ namespace MonoGame.Entities
                 throw new ArgumentException("A system with this type is not defined.");
         }
 
-        public Entity CreateEntity()
+        public T CreateEntity<T>() where T : Entity, new()
         {
-            var entity = new Entity();
+            var entity = new T();
 
             _entities.Add(entity);
 

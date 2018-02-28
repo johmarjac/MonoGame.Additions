@@ -1,51 +1,47 @@
-﻿using System;
+﻿using Microsoft.Xna.Framework.Content;
+using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace MonoGame.Entities
 {
     public class Entity
     {
-        public Entity()
+        protected Entity()
         {
-            _components = new ConcurrentDictionary<Type, EntityComponent>();
+            _components = new List<EntityComponent>();
         }
 
         public T Attach<T>() where T : EntityComponent, new()
         {
-            var type = typeof(T);
             var obj = new T();
 
-            if (!_components.TryAdd(type, obj))
-                throw new ArgumentException("Component with this type already exists.");
+            _components.Add(obj);
 
             return obj;
         }
 
-        public void Detach<T>() where T : EntityComponent
+        public void Detach(EntityComponent component)
         {
-            var type = typeof(T);
+            _components.Remove(component);
+        }
 
-            if (!_components.TryRemove(type, out var component))
-                throw new ArgumentException("Component with this type does not exist.");
+        public IEnumerable<T> GetComponents<T>() where T : EntityComponent
+        {
+            return _components.OfType<T>();
         }
 
         public T GetComponent<T>() where T : EntityComponent
         {
-            var type = typeof(T);
-
-            if (!_components.TryGetValue(type, out var component))
-                throw new ArgumentException("Component with this type does not exist.");
-
-            return (T)component;
+            return GetComponents<T>().FirstOrDefault();
         }
+        
+        public virtual void LoadContent(ContentManager content) { }
 
-        public bool HasComponent<T>() where T : EntityComponent
-        {
-            return _components.ContainsKey(typeof(T));
-        }
+        public object Tag { get; set; }
 
-        private ConcurrentDictionary<Type, EntityComponent> _components { get; }
-        public ICollection<EntityComponent> Components => _components.Values;
+        private List<EntityComponent> _components { get; }
+        public ICollection<EntityComponent> Components => _components;
     }
 }
