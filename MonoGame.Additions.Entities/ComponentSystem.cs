@@ -1,7 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using System;
 
-namespace MonoGame.Entities
+namespace MonoGame.Additions.Entities
 {
     public abstract class ComponentSystem : IDisposable
     {

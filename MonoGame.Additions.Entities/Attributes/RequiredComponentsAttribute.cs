@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace MonoGame.Entities.Attributes
+namespace MonoGame.Additions.Entities.Attributes
 {
     public sealed class RequiredComponentsAttribute : Attribute
     {

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace MonoGame.Entities
+namespace MonoGame.Additions.Entities
 {
     internal sealed class ComponentSystemContract
     {

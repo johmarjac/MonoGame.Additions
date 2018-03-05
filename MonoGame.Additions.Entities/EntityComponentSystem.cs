@@ -1,11 +1,11 @@
 ﻿using Microsoft.Xna.Framework;
-using MonoGame.Entities.Attributes;
+using MonoGame.Additions.Entities.Attributes;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace MonoGame.Entities
+namespace MonoGame.Additions.Entities
 {
     public sealed class EntityComponentSystem : DrawableGameComponent
     {

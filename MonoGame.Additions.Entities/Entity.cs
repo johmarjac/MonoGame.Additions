@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace MonoGame.Entities
+namespace MonoGame.Additions.Entities
 {
     public class Entity
     {
