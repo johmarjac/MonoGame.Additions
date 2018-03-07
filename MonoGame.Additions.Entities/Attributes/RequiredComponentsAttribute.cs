@@ -3,6 +3,7 @@ using System.Collections.Generic;
 
 namespace MonoGame.Additions.Entities.Attributes
 {
+    [AttributeUsage(AttributeTargets.Class)]
     public sealed class RequiredComponentsAttribute : Attribute
     {
         public RequiredComponentsAttribute(params Type[] components)

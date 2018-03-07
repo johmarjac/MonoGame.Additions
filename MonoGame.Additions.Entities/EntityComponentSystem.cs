@@ -15,10 +15,37 @@ namespace MonoGame.Additions.Entities
             _entities = new List<Entity>();
         }
 
-        public T RegisterSystem<T>(T system) where T : ComponentSystem
+        public override void Initialize()
+        {
+            base.Initialize();
+
+            foreach(var system in AppDomain.CurrentDomain.GetAssemblies()
+                .SelectMany(a => a.GetTypes()
+                .Where(t => t.GetCustomAttributes(true).Any(at => at.GetType() == typeof(ComponentSystemAttribute)))))
+            {
+                var obj = (ComponentSystem)Activator.CreateInstance(system);
+
+                obj.Game = Game;
+
+                var requiredComponents = new List<Type>();
+                foreach (var attr in system.GetCustomAttributes(typeof(RequiredComponentsAttribute), true) as RequiredComponentsAttribute[])
+                {
+                    requiredComponents.AddRange(attr.RequiredComponents);
+                }
+
+                var contract = new ComponentSystemContract(obj, requiredComponents.ToArray());
+
+                if (!_componentSystems.TryAdd(system, contract))
+                    throw new ArgumentException("A system with this type is already defined.");
+            }
+        }
+
+        public T RegisterSystem<T>() where T : ComponentSystem, new()
         {
             var type = typeof(T);
-            var obj = system;
+            var obj = new T();
+
+            obj.Game = Game;
 
             var requiredComponents = new List<Type>();
             foreach (var attr in typeof(T).GetCustomAttributes(typeof(RequiredComponentsAttribute), true) as RequiredComponentsAttribute[])
@@ -42,9 +69,9 @@ namespace MonoGame.Additions.Entities
                 throw new ArgumentException("A system with this type is not defined.");
         }
 
-        public T CreateEntity<T>() where T : Entity, new()
+        public Entity CreateEntity()
         {
-            var entity = new T();
+            var entity = new Entity();
 
             foreach (var system in _componentSystems)
                 system.Value.ComponentSystem.OnEntityCreated(entity);
@@ -68,54 +95,28 @@ namespace MonoGame.Additions.Entities
 
         public override void Update(GameTime gameTime)
         {
+            base.Update(gameTime);
+
             foreach (var system in _componentSystems.Values)
             {
-                foreach (var entity in _entities)
+                foreach(var entity in Entities.Where(e => system.RequiredComponents.All(c => e.HasComponent(c))))
                 {
-                    bool skip = false;
-                    foreach (var requiredComponent in system.RequiredComponents)
-                    {
-                        if (!entity.Components.Any(c => c.GetType() == requiredComponent))
-                        {
-                            skip = true;
-                            break;
-                        }
-                    }
-
-                    if (skip)
-                        break;
-
                     system.ComponentSystem.UpdateEntity(entity, gameTime);
                 }
             }
-
-            base.Update(gameTime);
         }
 
         public override void Draw(GameTime gameTime)
         {
+            base.Update(gameTime);
+
             foreach (var system in _componentSystems.Values)
             {
-                foreach (var entity in _entities)
+                foreach (var entity in Entities.Where(e => system.RequiredComponents.All(c => e.HasComponent(c))))
                 {
-                    bool skip = false;
-                    foreach (var requiredComponent in system.RequiredComponents)
-                    {
-                        if (!entity.Components.Any(c => c.GetType() == requiredComponent))
-                        {
-                            skip = true;
-                            break;
-                        }
-                    }
-
-                    if (skip)
-                        break;
-
                     system.ComponentSystem.DrawEntity(entity, gameTime);
                 }
             }
-
-            base.Update(gameTime);
         }
 
         private ConcurrentDictionary<Type, ComponentSystemContract> _componentSystems { get; }
