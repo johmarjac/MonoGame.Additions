@@ -5,6 +5,7 @@ using MonoGame.Additions.Entities.Components;
 
 namespace MonoGame.Additions.Entities.Systems
 {
+    [ComponentSystem]
     [RequiredComponents(typeof(SpriteBatchComponent), typeof(SpriteComponent))]
     public class SpriteSystem : ComponentSystem
     {
@@ -15,22 +16,20 @@ namespace MonoGame.Additions.Entities.Systems
             var batch = entity.GetComponent<SpriteBatchComponent>();
             var sprites = entity.GetComponents<SpriteComponent>();
 
-            batch.SpriteBatch.Begin();
-
             foreach (var sprite in sprites)
             {
                 if (!sprite.Sprite.IsVisible)
                     continue;
-
+                
                 batch.SpriteBatch.Draw(sprite.Sprite.Texture,
-                    new Rectangle(sprite.Sprite.Position.ToPoint(), sprite.Sprite.Texture.Bounds.Size),
-                    new Rectangle(0, 0, sprite.Sprite.Texture.Width, sprite.Sprite.Texture.Height),
+                    sprite.Sprite.Position,
+                    sprite.Sprite.Texture.Bounds,
                     Color.White,
                     sprite.Sprite.Rotation,
-                    Vector2.Zero, SpriteEffects.None, 1f);
+                    Vector2.Zero, 
+                    sprite.Sprite.Scale,
+                    SpriteEffects.None, 1f);
             }
-
-            batch.SpriteBatch.End();
         }
     }
 }
