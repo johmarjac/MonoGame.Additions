@@ -5,7 +5,8 @@ namespace MonoGame.Additions
     public interface ITransform2D
     {
         Vector2 Position { get; }
-        Vector2 Scalation { get; }
+        Vector2 Origin { get; }
+        float Scale { get; }
         float Rotation { get; }
     }
 }
