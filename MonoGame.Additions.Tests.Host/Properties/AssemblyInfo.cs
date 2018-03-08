@@ -5,15 +5,15 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTitle("MonoGame.Additions.Tests.Host")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("Meyer Burger AG")]
+[assembly: AssemblyCompany("")]
 [assembly: AssemblyProduct("MonoGame.Additions.Tests.Host")]
-[assembly: AssemblyCopyright("Copyright © Meyer Burger AG 2018")]
+[assembly: AssemblyCopyright("Copyright ©  2018")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
 [assembly: ComVisible(false)]
 
-[assembly: Guid("3bfcf892-add1-4ce4-8b56-db16221c9a15")]
+[assembly: Guid("2b4a574e-e6ab-423f-b814-bb1fde7232f1")]
 
 // [assembly: AssemblyVersion("1.0.*")]
 [assembly: AssemblyVersion("1.0.0.0")]
