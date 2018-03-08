@@ -13,7 +13,7 @@ namespace MonoGame.Additions.Tests.Host
         {
             XmlSerializer serializer = new XmlSerializer(typeof(TiledMap));
 
-            var map = (TiledMap)serializer.Deserialize(new StreamReader(new FileStream(@"D:\Desktop\test.tmx", FileMode.Open)));
+            var map = serializer.Deserialize(new StreamReader(new FileStream(@"D:\Desktop\test.tmx", FileMode.Open)));
         }
     }
 }
