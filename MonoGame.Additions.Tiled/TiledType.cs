@@ -5,8 +5,10 @@ using System.Runtime.Serialization;
 namespace MonoGame.Additions.Tiled
 {
     [JsonConverter(typeof(StringEnumConverter))]
-    public enum TiledMapOrientation
+    public enum TiledType
     {
-        [EnumMember(Value = "orthogonal")] Orthogonal
+        [EnumMember(Value = "map")] Map,
+        [EnumMember(Value = "tileset")] Tileset,
+        [EnumMember(Value = "tilelayer")] TileLayer,
     }
 }

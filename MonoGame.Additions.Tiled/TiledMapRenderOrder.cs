@@ -1,10 +1,12 @@
-﻿using System.Xml.Serialization;
+﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
+using System.Runtime.Serialization;
 
 namespace MonoGame.Additions.Tiled
 {
+    [JsonConverter(typeof(StringEnumConverter))]
     public enum TiledMapRenderOrder
     {
-        [XmlEnum("right-down")]
-        RightDown
+        [EnumMember(Value = "right-down")] RightDown
     }
 }

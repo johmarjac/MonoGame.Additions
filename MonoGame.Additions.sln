@@ -9,11 +9,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MonoGame.Additions.Animatio
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MonoGame.Additions", "MonoGame.Additions\MonoGame.Additions.csproj", "{28D29D6B-CA6A-4B07-A59C-113DB21D55BB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MonoGame.Additions.Tests", "MonoGame.Additions.Tests\MonoGame.Additions.Tests.csproj", "{1BDE7F63-C08F-40A9-BBE9-C3AEB623A6F8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MonoGame.Additions.Tiled", "MonoGame.Additions.Tiled\MonoGame.Additions.Tiled.csproj", "{B6111AD2-78FF-47A4-86F4-E20B8D532D41}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MonoGame.Additions.Tiled", "MonoGame.Additions.Tiled\MonoGame.Additions.Tiled.csproj", "{B6111AD2-78FF-47A4-86F4-E20B8D532D41}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MonoGame.Additions.ContentPipeline", "MonoGame.Additions.ContentPipeline\MonoGame.Additions.ContentPipeline.csproj", "{A592EA6E-CB6B-45E6-95B1-D6B953E86EF6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MonoGame.Additions.Tests.Host", "MonoGame.Additions.Tests.Host\MonoGame.Additions.Tests.Host.csproj", "{2B4A574E-E6AB-423F-B814-BB1FDE7232F1}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MonoGame.Additions.Tests", "MonoGame.Additions.Tests\MonoGame.Additions.Tests.csproj", "{68288A78-808D-424D-BD6E-2517EC23518A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,18 +33,18 @@ Global
 		{28D29D6B-CA6A-4B07-A59C-113DB21D55BB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{28D29D6B-CA6A-4B07-A59C-113DB21D55BB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{28D29D6B-CA6A-4B07-A59C-113DB21D55BB}.Release|Any CPU.Build.0 = Release|Any CPU
-		{1BDE7F63-C08F-40A9-BBE9-C3AEB623A6F8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{1BDE7F63-C08F-40A9-BBE9-C3AEB623A6F8}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{1BDE7F63-C08F-40A9-BBE9-C3AEB623A6F8}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{1BDE7F63-C08F-40A9-BBE9-C3AEB623A6F8}.Release|Any CPU.Build.0 = Release|Any CPU
 		{B6111AD2-78FF-47A4-86F4-E20B8D532D41}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{B6111AD2-78FF-47A4-86F4-E20B8D532D41}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B6111AD2-78FF-47A4-86F4-E20B8D532D41}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B6111AD2-78FF-47A4-86F4-E20B8D532D41}.Release|Any CPU.Build.0 = Release|Any CPU
-		{2B4A574E-E6AB-423F-B814-BB1FDE7232F1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{2B4A574E-E6AB-423F-B814-BB1FDE7232F1}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{2B4A574E-E6AB-423F-B814-BB1FDE7232F1}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{2B4A574E-E6AB-423F-B814-BB1FDE7232F1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A592EA6E-CB6B-45E6-95B1-D6B953E86EF6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A592EA6E-CB6B-45E6-95B1-D6B953E86EF6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A592EA6E-CB6B-45E6-95B1-D6B953E86EF6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A592EA6E-CB6B-45E6-95B1-D6B953E86EF6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{68288A78-808D-424D-BD6E-2517EC23518A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{68288A78-808D-424D-BD6E-2517EC23518A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{68288A78-808D-424D-BD6E-2517EC23518A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{68288A78-808D-424D-BD6E-2517EC23518A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -10,6 +10,24 @@
 
 #-------------------------------- References --------------------------------#
 
+/reference:..\..\MonoGame.Additions.ContentPipeline\bin\Debug\MonoGame.Additions.ContentPipeline.dll
 
 #---------------------------------- Content ---------------------------------#
+
+#begin Levels/test.json
+/importer:TiledMapImporter
+/processor:PassThroughProcessor
+/build:Levels/test.json
+
+#begin Assets/spritesheet_ground.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Assets/spritesheet_ground.png
 
