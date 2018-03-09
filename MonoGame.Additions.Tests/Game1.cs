@@ -12,11 +12,17 @@ namespace MonoGame.Additions.Tests
     {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
-        
+        TiledMap map;
+        TiledMapRenderer mapRenderer;
+
+        Matrix TransformMatrix;
+        Vector2 Position = Vector2.Zero;
+
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
+            IsMouseVisible = true;
         }
 
         /// <summary>
@@ -28,6 +34,7 @@ namespace MonoGame.Additions.Tests
         protected override void Initialize()
         {
             // TODO: Add your initialization logic here
+            mapRenderer = new TiledMapRenderer(GraphicsDevice);
 
             base.Initialize();
         }
@@ -42,7 +49,7 @@ namespace MonoGame.Additions.Tests
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
             // TODO: use this.Content to load your game content here
-            var map = Content.Load<TiledMap>("Levels/test");
+            map = Content.Load<TiledMap>("Levels/test");
         }
 
         /// <summary>
@@ -61,10 +68,10 @@ namespace MonoGame.Additions.Tests
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Update(GameTime gameTime)
         {
-            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
-                Exit();
-
-            // TODO: Add your update logic here
+            var delta = new Vector2(GamePad.GetState(PlayerIndex.One).ThumbSticks.Left.X, -GamePad.GetState(PlayerIndex.One).ThumbSticks.Left.Y);
+            var delta2 = new Vector2(GamePad.GetState(PlayerIndex.One).ThumbSticks.Right.X, -GamePad.GetState(PlayerIndex.One).ThumbSticks.Right.Y);
+            Position += delta * gameTime.ElapsedGameTime.Milliseconds;
+            Position += delta2 * gameTime.ElapsedGameTime.Milliseconds;
 
             base.Update(gameTime);
         }
@@ -77,7 +84,11 @@ namespace MonoGame.Additions.Tests
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
-            // TODO: Add your drawing code here
+            TransformMatrix = Matrix.CreateTranslation(new Vector3(Position, 0)) *
+                Matrix.CreateRotationZ(0f) *
+                Matrix.CreateScale(1, 1, 1);
+
+            mapRenderer.Draw(map, ref TransformMatrix);
 
             base.Draw(gameTime);
         }

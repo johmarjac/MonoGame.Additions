@@ -49,5 +49,8 @@ namespace MonoGame.Additions.Tiled
         
         [JsonProperty("internalTilesets")]
         public List<TiledTileset> Tilesets { get; set; }
+
+        [JsonProperty("layers")]
+        public List<TiledMapLayer> Layers { get; set; }
     }
 }
