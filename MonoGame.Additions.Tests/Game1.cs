@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using MonoGame.Additions.Adapters;
 using MonoGame.Additions.Tiled;
 
 namespace MonoGame.Additions.Tests
@@ -12,17 +13,19 @@ namespace MonoGame.Additions.Tests
     {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
+        Camera2D camera;
         TiledMap map;
         TiledMapRenderer mapRenderer;
 
-        Matrix TransformMatrix;
-        Vector2 Position = Vector2.Zero;
-
+        SpriteFont font;
+        FrameCounter counter;
+        
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
             IsMouseVisible = true;
+            Window.AllowUserResizing = true;
         }
 
         /// <summary>
@@ -34,6 +37,8 @@ namespace MonoGame.Additions.Tests
         protected override void Initialize()
         {
             // TODO: Add your initialization logic here
+            counter = new FrameCounter();
+            camera = new Camera2D(new WindowViewportAdapter(Window, GraphicsDevice));
             mapRenderer = new TiledMapRenderer(GraphicsDevice);
 
             base.Initialize();
@@ -47,6 +52,7 @@ namespace MonoGame.Additions.Tests
         {
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
+            font = Content.Load<SpriteFont>("Fonts/Default");
 
             // TODO: use this.Content to load your game content here
             map = Content.Load<TiledMap>("Levels/test");
@@ -68,11 +74,10 @@ namespace MonoGame.Additions.Tests
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Update(GameTime gameTime)
         {
-            var delta = new Vector2(GamePad.GetState(PlayerIndex.One).ThumbSticks.Left.X, -GamePad.GetState(PlayerIndex.One).ThumbSticks.Left.Y);
-            var delta2 = new Vector2(GamePad.GetState(PlayerIndex.One).ThumbSticks.Right.X, -GamePad.GetState(PlayerIndex.One).ThumbSticks.Right.Y);
-            Position += delta * gameTime.ElapsedGameTime.Milliseconds;
-            Position += delta2 * gameTime.ElapsedGameTime.Milliseconds;
+            var gamePadState = GamePad.GetState(PlayerIndex.One);
 
+            camera.Move(new Vector2(gamePadState.ThumbSticks.Left.X, -gamePadState.ThumbSticks.Left.Y) * gameTime.ElapsedGameTime.Milliseconds);
+            
             base.Update(gameTime);
         }
 
@@ -84,11 +89,15 @@ namespace MonoGame.Additions.Tests
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
-            TransformMatrix = Matrix.CreateTranslation(new Vector3(Position, 0)) *
-                Matrix.CreateRotationZ(0f) *
-                Matrix.CreateScale(1, 1, 1);
+            var transformMatrix = camera.GetViewMatrix();
 
-            mapRenderer.Draw(map, ref TransformMatrix);
+            mapRenderer.Draw(map, ref transformMatrix);
+
+            counter.Update((float)gameTime.ElapsedGameTime.TotalSeconds);
+
+            spriteBatch.Begin();
+            spriteBatch.DrawString(font, $"FPS: {counter.AverageFramesPerSecond}", Vector2.Zero, Color.White);
+            spriteBatch.End();
 
             base.Draw(gameTime);
         }
