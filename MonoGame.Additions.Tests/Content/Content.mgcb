@@ -14,11 +14,6 @@
 
 #---------------------------------- Content ---------------------------------#
 
-#begin Levels/test.json
-/importer:TiledMapImporter
-/processor:PassThroughProcessor
-/build:Levels/test.json
-
 #begin Assets/grounds.png
 /importer:TextureImporter
 /processor:TextureProcessor

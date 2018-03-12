@@ -4,7 +4,6 @@ namespace MonoGame.Additions.Tiled
 {
     public enum TiledMapOrientation
     {
-        [EnumMember(Value = "orthogonal")]
-        Orthogonal
+        [EnumMember(Value = "orthogonal")] Orthogonal
     }
 }

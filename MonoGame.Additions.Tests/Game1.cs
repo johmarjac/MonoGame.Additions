@@ -1,8 +1,11 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using MonoGame.Additions.ContentPipeline.Tiled;
 using MonoGame.Additions.Tiled;
+using Newtonsoft.Json.Linq;
 using System;
-using System.Xml;
+using System.Collections.Generic;
+using System.IO;
 
 namespace MonoGame.Additions.Tests
 {
@@ -44,60 +47,32 @@ namespace MonoGame.Additions.Tests
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
             // TODO: use this.Content to load your game content here
+            var obj = JObject.Parse(File.ReadAllText(@".\..\..\..\..\Content\Levels\test.json"));
 
-            var xml = new XmlDocument();
-            xml.Load(@".\..\..\..\..\Content\Levels\test.tmx");
+            var map = new TiledMapRaw();
+            map.Version = obj["version"].ToObject<int>();
+            map.TiledVersion = obj["tiledversion"].ToObject<string>();
+            map.Width = obj["width"].ToObject<int>();
+            map.Height = obj["height"].ToObject<int>();
+            map.TileWidth = obj["tilewidth"].ToObject<int>();
+            map.TileHeight = obj["tileheight"].ToObject<int>();
+            map.Type = obj["type"].ToObject<TiledType>();
+            map.Orientation = obj["orientation"].ToObject<TiledMapOrientation>();
+            map.RenderOrder = obj["renderorder"].ToObject<TiledMapRenderOrder>();
+            map.NextObjectId = obj["nextobjectid"].ToObject<int>();
+            map.Infinite = obj["infinite"].ToObject<bool>();
+            map.Tilesets = obj["tilesets"].ToObject<List<TiledTilesetRaw>>();
 
-            var tiledMapRaw = new TiledMapRaw();
-            tiledMapRaw.version = xml.DocumentElement.Attributes["version"].InnerText;
-            tiledMapRaw.tiledversion = xml.DocumentElement.Attributes["tiledversion"].InnerText;
-
-            var orientation = xml.DocumentElement.Attributes["orientation"].InnerText;
-            if (orientation == "orthogonal")
-                tiledMapRaw.orientation = TiledMapOrientation.Orthogonal;
-            // else if etc.
-
-            var renderorder = xml.DocumentElement.Attributes["renderorder"].InnerText;
-            if (renderorder == "right-down")
-                tiledMapRaw.renderorder = TiledMapRenderOrder.RightDown;
-            // else if etc.
-
-            tiledMapRaw.width = int.Parse(xml.DocumentElement.Attributes["width"].InnerText);
-            tiledMapRaw.height = int.Parse(xml.DocumentElement.Attributes["height"].InnerText);
-            tiledMapRaw.tilewidth = int.Parse(xml.DocumentElement.Attributes["tilewidth"].InnerText);
-            tiledMapRaw.tileheight = int.Parse(xml.DocumentElement.Attributes["tileheight"].InnerText);
-            tiledMapRaw.infinite = xml.DocumentElement.Attributes["infinite"].InnerText == "0" ? false : true;
-            tiledMapRaw.nextobjectid = int.Parse(xml.DocumentElement.Attributes["nextobjectid"].InnerText);
-
-            var tilesets = xml.DocumentElement.GetElementsByTagName("tileset");
-            tiledMapRaw.tilesets = new TiledTilesetRaw[tilesets.Count];
-
-            for(int i = 0; i < tiledMapRaw.tilesets.Length; i++)
+            foreach(var layerObj in obj["layers"])
             {
-                tiledMapRaw.tilesets[i] = new TiledTilesetRaw();
-                tiledMapRaw.tilesets[i].firstgid = int.Parse(tilesets[i].Attributes["firstgid"].InnerText);
-                tiledMapRaw.tilesets[i].source = tilesets[i].Attributes["source"].InnerText;
-            }
-
-            var layers = xml.DocumentElement.GetElementsByTagName("layer");
-            tiledMapRaw.layers = new TiledMapLayerRaw[layers.Count];
-
-            for(int i = 0; i < tiledMapRaw.layers.Length; i++)
-            {
-                tiledMapRaw.layers[i] = new TiledMapLayerRaw();
-                tiledMapRaw.layers[i].name = layers[i].Attributes["name"].InnerText;
-                tiledMapRaw.layers[i].width = int.Parse(layers[i].Attributes["width"].InnerText);
-                tiledMapRaw.layers[i].height = int.Parse(layers[i].Attributes["height"].InnerText);
-
-                var data = layers[i].ChildNodes.Count != 0 ? layers[i].ChildNodes[0] : null;
-                tiledMapRaw.layers[i].data = new TiledMapLayerDataRaw();
-                tiledMapRaw.layers[i].data.encoding = data.Attributes["encoding"].InnerText;
-
-                var dataRaw = data.InnerText.Replace("\r\n", "").Split(',');
-                tiledMapRaw.layers[i].data.data = new int[dataRaw.Length];
-
-                for (int j = 0; j < dataRaw.Length; j++)
-                    tiledMapRaw.layers[i].data.data[j] = int.Parse(dataRaw[j]);
+                switch(layerObj["type"].ToObject<TiledType>())
+                {
+                    case TiledType.TileLayer:
+                        map.Layers.Add(layerObj.ToObject<TiledMapTileLayer>());
+                        break;
+                    default:
+                        throw new NotSupportedException("Layer not (yet) supported.");
+                }
             }
         }
 

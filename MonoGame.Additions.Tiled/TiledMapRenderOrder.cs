@@ -1,7 +1,9 @@
-﻿namespace MonoGame.Additions.Tiled
+﻿using System.Runtime.Serialization;
+
+namespace MonoGame.Additions.Tiled
 {
     public enum TiledMapRenderOrder
     {
-        RightDown
+        [EnumMember(Value = "right-down")] RightDown
     }
 }
