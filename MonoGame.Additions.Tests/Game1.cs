@@ -49,19 +49,21 @@ namespace MonoGame.Additions.Tests
             // TODO: use this.Content to load your game content here
             var obj = JObject.Parse(File.ReadAllText(@".\..\..\..\..\Content\Levels\test.json"));
 
-            var map = new TiledMapRaw();
-            map.Version = obj["version"].ToObject<int>();
-            map.TiledVersion = obj["tiledversion"].ToObject<string>();
-            map.Width = obj["width"].ToObject<int>();
-            map.Height = obj["height"].ToObject<int>();
-            map.TileWidth = obj["tilewidth"].ToObject<int>();
-            map.TileHeight = obj["tileheight"].ToObject<int>();
-            map.Type = obj["type"].ToObject<TiledType>();
-            map.Orientation = obj["orientation"].ToObject<TiledMapOrientation>();
-            map.RenderOrder = obj["renderorder"].ToObject<TiledMapRenderOrder>();
-            map.NextObjectId = obj["nextobjectid"].ToObject<int>();
-            map.Infinite = obj["infinite"].ToObject<bool>();
-            map.Tilesets = obj["tilesets"].ToObject<List<TiledTilesetRaw>>();
+            var map = new TiledMapRaw()
+            {
+                Version = obj["version"].ToObject<int>(),
+                TiledVersion = obj["tiledversion"].ToObject<string>(),
+                Width = obj["width"].ToObject<int>(),
+                Height = obj["height"].ToObject<int>(),
+                TileWidth = obj["tilewidth"].ToObject<int>(),
+                TileHeight = obj["tileheight"].ToObject<int>(),
+                Type = obj["type"].ToObject<TiledType>(),
+                Orientation = obj["orientation"].ToObject<TiledMapOrientation>(),
+                RenderOrder = obj["renderorder"].ToObject<TiledMapRenderOrder>(),
+                NextObjectId = obj["nextobjectid"].ToObject<int>(),
+                Infinite = obj["infinite"].ToObject<bool>(),
+                Tilesets = obj["tilesets"].ToObject<List<TiledTilesetRaw>>()
+            };
 
             foreach(var layerObj in obj["layers"])
             {
@@ -69,6 +71,9 @@ namespace MonoGame.Additions.Tests
                 {
                     case TiledType.TileLayer:
                         map.Layers.Add(layerObj.ToObject<TiledMapTileLayer>());
+                        break;
+                    case TiledType.ObjectLayer:
+                        map.Layers.Add(layerObj.ToObject<TiledMapObjectLayer>());
                         break;
                     default:
                         throw new NotSupportedException("Layer not (yet) supported.");

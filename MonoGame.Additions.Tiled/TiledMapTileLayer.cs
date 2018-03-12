@@ -6,5 +6,11 @@ namespace MonoGame.Additions.Tiled
     {
         [JsonProperty("data")]
         public int[] Data { get; set; }
+
+        [JsonProperty("width")]
+        public int Width { get; set; }
+        
+        [JsonProperty("height")]
+        public int Height { get; set; }
     }
 }

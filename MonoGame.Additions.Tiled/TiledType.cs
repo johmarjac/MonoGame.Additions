@@ -6,6 +6,7 @@ namespace MonoGame.Additions.Tiled
     {
         [EnumMember(Value = "map")] Map,
         [EnumMember(Value = "tileset")] Tileset,
-        [EnumMember(Value = "tilelayer")] TileLayer
+        [EnumMember(Value = "tilelayer")] TileLayer,
+        [EnumMember(Value = "objectgroup")] ObjectLayer
     }
 }
