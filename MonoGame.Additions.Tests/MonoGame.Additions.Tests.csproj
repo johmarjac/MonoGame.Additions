@@ -43,6 +43,7 @@
     <ApplicationManifest>app.manifest</ApplicationManifest>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="FrameCounter.cs" />
     <Compile Include="Game1.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -119,6 +120,10 @@
     <ProjectReference Include="..\MonoGame.Additions.Tiled\MonoGame.Additions.Tiled.csproj">
       <Project>{B6111AD2-78FF-47A4-86F4-E20B8D532D41}</Project>
       <Name>MonoGame.Additions.Tiled</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MonoGame.Additions\MonoGame.Additions.csproj">
+      <Project>{28d29d6b-ca6a-4b07-a59c-113db21d55bb}</Project>
+      <Name>MonoGame.Additions</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
