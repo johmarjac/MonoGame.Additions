@@ -26,15 +26,15 @@
 /processorParam:TextureFormat=Color
 /build:Assets/spritesheet_ground.png
 
-#begin Levels/test.json
-/importer:TiledMapImporter
-/processor:PassThroughProcessor
-/build:Levels/test.json
-
 #begin Fonts/Default.spritefont
 /importer:FontDescriptionImporter
 /processor:FontDescriptionProcessor
 /processorParam:PremultiplyAlpha=True
 /processorParam:TextureFormat=Compressed
 /build:Fonts/Default.spritefont
+
+#begin Levels/test.json
+/importer:TiledMapImporter
+/processor:TiledMapProcesssor
+/build:Levels/test.json
 

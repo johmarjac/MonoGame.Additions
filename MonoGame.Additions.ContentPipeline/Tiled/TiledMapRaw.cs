@@ -1,5 +1,6 @@
 ﻿using MonoGame.Additions.Tiled;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace MonoGame.Additions.ContentPipeline.Tiled
 {
@@ -9,6 +10,26 @@ namespace MonoGame.Additions.ContentPipeline.Tiled
         {
             Tilesets = new List<TiledTilesetRaw>();
             Layers = new List<TiledMapLayer>();
+        }
+
+        internal TiledMap ToTiledMap()
+        {
+            return new TiledMap()
+            {
+                Version = Version,
+                TiledVersion = TiledVersion,
+                Width = Width,
+                Height = Height,
+                TileWidth = TileWidth,
+                TileHeight = TileHeight,
+                Type = Type,
+                Orientation = Orientation,
+                RenderOrder = RenderOrder,
+                NextObjectId = NextObjectId,
+                Infinite = Infinite,
+                Tilesets = Tilesets.Select(t => t.TilesetMetaData).ToList(),
+                Layers = Layers
+            };
         }
 
         public int Version { get; set; }
