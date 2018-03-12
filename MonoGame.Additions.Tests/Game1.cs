@@ -1,7 +1,8 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
 using MonoGame.Additions.Tiled;
+using System;
+using System.Xml;
 
 namespace MonoGame.Additions.Tests
 {
@@ -12,12 +13,7 @@ namespace MonoGame.Additions.Tests
     {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
-        TiledMap map;
-        TiledMapRenderer mapRenderer;
-
-        Matrix TransformMatrix;
-        Vector2 Position = Vector2.Zero;
-
+        
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
@@ -34,7 +30,6 @@ namespace MonoGame.Additions.Tests
         protected override void Initialize()
         {
             // TODO: Add your initialization logic here
-            mapRenderer = new TiledMapRenderer(GraphicsDevice);
 
             base.Initialize();
         }
@@ -49,7 +44,61 @@ namespace MonoGame.Additions.Tests
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
             // TODO: use this.Content to load your game content here
-            map = Content.Load<TiledMap>("Levels/test");
+
+            var xml = new XmlDocument();
+            xml.Load(@".\..\..\..\..\Content\Levels\test.tmx");
+
+            var tiledMapRaw = new TiledMapRaw();
+            tiledMapRaw.version = xml.DocumentElement.Attributes["version"].InnerText;
+            tiledMapRaw.tiledversion = xml.DocumentElement.Attributes["tiledversion"].InnerText;
+
+            var orientation = xml.DocumentElement.Attributes["orientation"].InnerText;
+            if (orientation == "orthogonal")
+                tiledMapRaw.orientation = TiledMapOrientation.Orthogonal;
+            // else if etc.
+
+            var renderorder = xml.DocumentElement.Attributes["renderorder"].InnerText;
+            if (renderorder == "right-down")
+                tiledMapRaw.renderorder = TiledMapRenderOrder.RightDown;
+            // else if etc.
+
+            tiledMapRaw.width = int.Parse(xml.DocumentElement.Attributes["width"].InnerText);
+            tiledMapRaw.height = int.Parse(xml.DocumentElement.Attributes["height"].InnerText);
+            tiledMapRaw.tilewidth = int.Parse(xml.DocumentElement.Attributes["tilewidth"].InnerText);
+            tiledMapRaw.tileheight = int.Parse(xml.DocumentElement.Attributes["tileheight"].InnerText);
+            tiledMapRaw.infinite = xml.DocumentElement.Attributes["infinite"].InnerText == "0" ? false : true;
+            tiledMapRaw.nextobjectid = int.Parse(xml.DocumentElement.Attributes["nextobjectid"].InnerText);
+
+            var tilesets = xml.DocumentElement.GetElementsByTagName("tileset");
+            tiledMapRaw.tilesets = new TiledTilesetRaw[tilesets.Count];
+
+            for(int i = 0; i < tiledMapRaw.tilesets.Length; i++)
+            {
+                tiledMapRaw.tilesets[i] = new TiledTilesetRaw();
+                tiledMapRaw.tilesets[i].firstgid = int.Parse(tilesets[i].Attributes["firstgid"].InnerText);
+                tiledMapRaw.tilesets[i].source = tilesets[i].Attributes["source"].InnerText;
+            }
+
+            var layers = xml.DocumentElement.GetElementsByTagName("layer");
+            tiledMapRaw.layers = new TiledMapLayerRaw[layers.Count];
+
+            for(int i = 0; i < tiledMapRaw.layers.Length; i++)
+            {
+                tiledMapRaw.layers[i] = new TiledMapLayerRaw();
+                tiledMapRaw.layers[i].name = layers[i].Attributes["name"].InnerText;
+                tiledMapRaw.layers[i].width = int.Parse(layers[i].Attributes["width"].InnerText);
+                tiledMapRaw.layers[i].height = int.Parse(layers[i].Attributes["height"].InnerText);
+
+                var data = layers[i].ChildNodes.Count != 0 ? layers[i].ChildNodes[0] : null;
+                tiledMapRaw.layers[i].data = new TiledMapLayerDataRaw();
+                tiledMapRaw.layers[i].data.encoding = data.Attributes["encoding"].InnerText;
+
+                var dataRaw = data.InnerText.Replace("\r\n", "").Split(',');
+                tiledMapRaw.layers[i].data.data = new int[dataRaw.Length];
+
+                for (int j = 0; j < dataRaw.Length; j++)
+                    tiledMapRaw.layers[i].data.data[j] = int.Parse(dataRaw[j]);
+            }
         }
 
         /// <summary>
@@ -68,11 +117,6 @@ namespace MonoGame.Additions.Tests
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Update(GameTime gameTime)
         {
-            var delta = new Vector2(GamePad.GetState(PlayerIndex.One).ThumbSticks.Left.X, -GamePad.GetState(PlayerIndex.One).ThumbSticks.Left.Y);
-            var delta2 = new Vector2(GamePad.GetState(PlayerIndex.One).ThumbSticks.Right.X, -GamePad.GetState(PlayerIndex.One).ThumbSticks.Right.Y);
-            Position += delta * gameTime.ElapsedGameTime.Milliseconds;
-            Position += delta2 * gameTime.ElapsedGameTime.Milliseconds;
-
             base.Update(gameTime);
         }
 
@@ -83,12 +127,6 @@ namespace MonoGame.Additions.Tests
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
-
-            TransformMatrix = Matrix.CreateTranslation(new Vector3(Position, 0)) *
-                Matrix.CreateRotationZ(0f) *
-                Matrix.CreateScale(1, 1, 1);
-
-            mapRenderer.Draw(map, ref TransformMatrix);
 
             base.Draw(gameTime);
         }
