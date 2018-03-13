@@ -14,7 +14,7 @@ namespace MonoGame.Additions.ContentPipeline.Tiled
 
         internal TiledMap ToTiledMap()
         {
-            return new TiledMap()
+            var map = new TiledMap()
             {
                 Version = Version,
                 TiledVersion = TiledVersion,
@@ -27,9 +27,13 @@ namespace MonoGame.Additions.ContentPipeline.Tiled
                 RenderOrder = RenderOrder,
                 NextObjectId = NextObjectId,
                 Infinite = Infinite,
-                Tilesets = Tilesets.Select(t => t.TilesetMetaData).ToList(),
                 Layers = Layers
             };
+
+            Tilesets.ForEach(t => t.TilesetMetaData.FirstGID = t.FirstGID);
+            map.Tilesets = Tilesets.Select(t => t.TilesetMetaData).ToList();
+
+            return map;
         }
 
         public int Version { get; set; }

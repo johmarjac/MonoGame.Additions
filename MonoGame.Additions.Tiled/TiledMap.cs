@@ -4,6 +4,12 @@ namespace MonoGame.Additions.Tiled
 {
     public sealed class TiledMap
     {
+        public TiledMap()
+        {
+            Tilesets = new List<TiledTileset>();
+            Layers = new List<TiledMapLayer>();
+        }
+
         public int Version { get; set; }
         public string TiledVersion { get; set; }
         public int Width { get; set; }

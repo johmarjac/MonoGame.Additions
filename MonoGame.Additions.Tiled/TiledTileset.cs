@@ -16,5 +16,6 @@ namespace MonoGame.Additions.Tiled
         public int TileHeight { get; set; }
         public int TileWidth { get; set; }
         public TiledType Type { get; set; }
+        public int FirstGID { get; set; }
     }
 }
