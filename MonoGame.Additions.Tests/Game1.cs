@@ -55,6 +55,7 @@ namespace MonoGame.Additions.Tests
                     Index = i
                 });
             }
+            explosion.Play("explosion");
         }
 
         protected override void UnloadContent()
@@ -65,9 +66,6 @@ namespace MonoGame.Additions.Tests
         protected override void Update(GameTime gameTime)
         {
             var state = Keyboard.GetState();
-
-            if(state.IsKeyDown(Keys.Enter))
-                explosion.Play("explosion");
 
             if (state.IsKeyDown(Keys.D))
             {
