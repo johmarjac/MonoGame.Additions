@@ -11,8 +11,6 @@ namespace MonoGame.Additions.ContentPipeline.Tiled
     {
         protected override void Write(ContentWriter output, TiledMap value)
         {
-            //output.Write(JsonConvert.SerializeObject(value));
-
             output.Write(value.Version);
             output.Write(value.TiledVersion);
             output.Write(value.Width);

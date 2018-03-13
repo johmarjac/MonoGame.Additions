@@ -1,0 +1,29 @@
+{
+	"spritesheet": ".\/..\/SpriteSheets\/spritesheet_players.spritesheet",
+	"animations": [
+		{
+			"name": "player_movement",
+			"playbackmode": "loop",
+			"frames": [
+				{
+					"index": 12,
+					"duration": 200
+				}, 
+				{
+					"index": 20,
+					"duration": 200
+				}
+			]
+		},
+		{
+			"name": "player_stand",
+			"playbackmode": "once",
+			"frames": [
+				{
+					"index": 44,
+					"duration": 0
+				}
+			]
+		}
+	]
+}

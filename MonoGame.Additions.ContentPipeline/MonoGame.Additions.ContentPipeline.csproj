@@ -46,7 +46,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Animations\SpriteSheetAnimationImporter.cs" />
-    <Compile Include="Animations\SpriteSheetAnimationWriter.cs" />
+    <Compile Include="Animations\SpriteSheetAnimationsWriter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SpriteSheetImporter.cs" />
     <Compile Include="SpriteSheetWriter.cs" />

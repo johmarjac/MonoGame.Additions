@@ -55,8 +55,8 @@
 /processorParam:TextureFormat=Color
 /build:Assets/spritesheet_players.png
 
-#begin SpriteSheetAnimations/alienGreen_movement.ssanimation
+#begin SpriteSheetAnimations/alienGreen.anis
 /importer:SpriteSheetAnimationImporter
 /processor:PassThroughProcessor
-/build:SpriteSheetAnimations/alienGreen_movement.ssanimation
+/build:SpriteSheetAnimations/alienGreen.anis
 
