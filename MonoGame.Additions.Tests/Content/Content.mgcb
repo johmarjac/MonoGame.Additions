@@ -38,3 +38,25 @@
 /processor:TiledMapProcesssor
 /build:Levels/test.json
 
+#begin SpriteSheets/spritesheet_players.spritesheet
+/importer:SpriteSheetImporter
+/processor:PassThroughProcessor
+/build:SpriteSheets/spritesheet_players.spritesheet
+
+#begin Assets/spritesheet_players.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Assets/spritesheet_players.png
+
+#begin SpriteSheetAnimations/alienGreen_movement.ssanimation
+/importer:SpriteSheetAnimationImporter
+/processor:PassThroughProcessor
+/build:SpriteSheetAnimations/alienGreen_movement.ssanimation
+

@@ -1,0 +1,7 @@
+{
+	"image": ".\/..\/Assets\/spritesheet_players.png",
+	"columns": 8,
+	"rows": 8,
+	"spritewidth": 128,
+	"spriteheight": 256
+}

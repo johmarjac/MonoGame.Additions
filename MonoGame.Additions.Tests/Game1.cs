@@ -1,80 +1,99 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using MonoGame.Additions.ContentPipeline.Tiled;
+using Microsoft.Xna.Framework.Input;
+using MonoGame.Additions.Adapters;
+using MonoGame.Additions.Animations;
+using MonoGame.Additions.Graphics;
 using MonoGame.Additions.Tiled;
-using Newtonsoft.Json.Linq;
-using System;
-using System.Collections.Generic;
-using System.IO;
 
 namespace MonoGame.Additions.Tests
 {
-    /// <summary>
-    /// This is the main type for your game.
-    /// </summary>
     public class Game1 : Game
     {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
+
+        Camera2D camera;
+        TiledMap map;
+        TiledMapRenderer mapRenderer;
+
+         SpriteSheetAnimation animation;
+         SpriteSheetAnimationRenderer animationRenderer;
         
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
+            graphics.PreferredBackBufferWidth = 640;
+            graphics.PreferredBackBufferHeight = 640;
             Content.RootDirectory = "Content";
             IsMouseVisible = true;
         }
-
-        /// <summary>
-        /// Allows the game to perform any initialization it needs to before starting to run.
-        /// This is where it can query for any required services and load any non-graphic
-        /// related content.  Calling base.Initialize will enumerate through any components
-        /// and initialize them as well.
-        /// </summary>
+        
         protected override void Initialize()
         {
-            // TODO: Add your initialization logic here
+            camera = new Camera2D(new WindowViewportAdapter(Window, GraphicsDevice));
+            mapRenderer = new TiledMapRenderer(GraphicsDevice);
+            animationRenderer = new SpriteSheetAnimationRenderer(GraphicsDevice);
 
             base.Initialize();
         }
-
-        /// <summary>
-        /// LoadContent will be called once per game and is the place to load
-        /// all of your content.
-        /// </summary>
+        
         protected override void LoadContent()
         {
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
-            var map = Content.Load<TiledMap>("Levels/test");
+            map = Content.Load<TiledMap>("Levels/test");
+            animation = Content.Load<SpriteSheetAnimation>("SpriteSheetAnimations/alienGreen_movement");
         }
-
-        /// <summary>
-        /// UnloadContent will be called once per game and is the place to unload
-        /// game-specific content.
-        /// </summary>
+        
         protected override void UnloadContent()
         {
             // TODO: Unload any non ContentManager content here
         }
-
-        /// <summary>
-        /// Allows the game to run logic such as updating the world,
-        /// checking for collisions, gathering input, and playing audio.
-        /// </summary>
-        /// <param name="gameTime">Provides a snapshot of timing values.</param>
+        
         protected override void Update(GameTime gameTime)
         {
+            var state = Keyboard.GetState();
+            var WASD = default(Vector2);
+
+            if (state.IsKeyDown(Keys.W))
+                WASD = new Vector2(WASD.X, -1f);
+
+            
+
+            if (state.IsKeyDown(Keys.S))
+                WASD = new Vector2(WASD.X, 1f);
+
+            if (state.IsKeyDown(Keys.D))
+            {
+                //WASD = new Vector2(1f, WASD.Y);
+                animation.SpriteEffects = SpriteEffects.None;
+                animation.Play();
+            }
+            else if (state.IsKeyDown(Keys.A))
+            {
+                //WASD = new Vector2(-1f, WASD.Y);
+                animation.SpriteEffects = SpriteEffects.FlipHorizontally;
+                animation.Play();
+            }
+            else
+                animation.Pause();
+
+            camera.Move(WASD * gameTime.ElapsedGameTime.Milliseconds);
+
+            animationRenderer.Update(animation, gameTime);
             base.Update(gameTime);
         }
-
-        /// <summary>
-        /// This is called when the game should draw itself.
-        /// </summary>
-        /// <param name="gameTime">Provides a snapshot of timing values.</param>
+        
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
+
+            var transformMatrix = camera.GetViewMatrix();
+
+            mapRenderer.Draw(map, ref transformMatrix);
+            animationRenderer.Draw(animation, ref transformMatrix);
 
             base.Draw(gameTime);
         }

@@ -113,6 +113,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\MonoGame.Additions.Animations\MonoGame.Additions.Animations.csproj">
+      <Project>{D7F31E60-C5BF-41F3-B1F4-F4BAC176AE88}</Project>
+      <Name>MonoGame.Additions.Animations</Name>
+    </ProjectReference>
     <ProjectReference Include="..\MonoGame.Additions.ContentPipeline\MonoGame.Additions.ContentPipeline.csproj">
       <Project>{A592EA6E-CB6B-45E6-95B1-D6B953E86EF6}</Project>
       <Name>MonoGame.Additions.ContentPipeline</Name>
