@@ -1,0 +1,7 @@
+{
+	"image": ".\/..\/Assets\/explosion.png",
+	"columns": 9,
+	"rows": 9,
+	"spritewidth": 100,
+	"spriteheight": 100
+}

@@ -16,9 +16,10 @@ namespace MonoGame.Additions.Tests
         TiledMap map;
         TiledMapRenderer mapRenderer;
 
-         SpriteSheetAnimations alienGreenAnimations;
-         SpriteSheetAnimationsRenderer animationRenderer;
-        
+        SpriteSheetAnimations alienGreenAnimations;
+        SpriteSheetAnimations explosion;
+        SpriteSheetAnimationsRenderer animationRenderer;
+
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
@@ -27,7 +28,7 @@ namespace MonoGame.Additions.Tests
             Content.RootDirectory = "Content";
             IsMouseVisible = true;
         }
-        
+
         protected override void Initialize()
         {
             camera = new Camera2D(new WindowViewportAdapter(Window, GraphicsDevice));
@@ -36,7 +37,7 @@ namespace MonoGame.Additions.Tests
 
             base.Initialize();
         }
-        
+
         protected override void LoadContent()
         {
             // Create a new SpriteBatch, which can be used to draw textures.
@@ -44,16 +45,29 @@ namespace MonoGame.Additions.Tests
 
             map = Content.Load<TiledMap>("Levels/test");
             alienGreenAnimations = Content.Load<SpriteSheetAnimations>("SpriteSheetAnimations/alienGreen");
+            explosion = Content.Load<SpriteSheetAnimations>("SpriteSheetAnimations/explosion");
+
+            for (int i = 0; i < 74; i++)
+            {
+                explosion.Animations[0].Frames.Add(new SpriteSheetAnimationFrame()
+                {
+                    Duration = 50,
+                    Index = i
+                });
+            }
         }
-        
+
         protected override void UnloadContent()
         {
             // TODO: Unload any non ContentManager content here
         }
-        
+
         protected override void Update(GameTime gameTime)
         {
             var state = Keyboard.GetState();
+
+            if(state.IsKeyDown(Keys.Enter))
+                explosion.Play("explosion");
 
             if (state.IsKeyDown(Keys.D))
             {
@@ -69,11 +83,12 @@ namespace MonoGame.Additions.Tests
             }
             else
                 alienGreenAnimations.Play("player_stand");
-            
+
+            animationRenderer.Update(explosion, gameTime);
             animationRenderer.Update(alienGreenAnimations, gameTime);
             base.Update(gameTime);
         }
-        
+
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
@@ -81,6 +96,7 @@ namespace MonoGame.Additions.Tests
             var transformMatrix = camera.GetViewMatrix();
 
             mapRenderer.Draw(map, ref transformMatrix);
+            animationRenderer.Draw(explosion, ref transformMatrix);
             animationRenderer.Draw(alienGreenAnimations, ref transformMatrix);
 
             base.Draw(gameTime);

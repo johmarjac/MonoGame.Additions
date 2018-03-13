@@ -1,0 +1,22 @@
+{
+	"spritesheet": ".\/..\/SpriteSheets\/spritesheet_explosion.spritesheet",
+	"animations": [
+		{
+			"name": "explosion",
+			"playbackmode": "loop",
+			"frames": [
+				
+			]
+		},
+		{
+			"name": "player_stand",
+			"playbackmode": "once",
+			"frames": [
+				{
+					"index": 44,
+					"duration": 0
+				}
+			]
+		}
+	]
+}

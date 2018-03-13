@@ -60,3 +60,25 @@
 /processor:PassThroughProcessor
 /build:SpriteSheetAnimations/alienGreen.anis
 
+#begin SpriteSheetAnimations/explosion.anis
+/importer:SpriteSheetAnimationImporter
+/processor:PassThroughProcessor
+/build:SpriteSheetAnimations/explosion.anis
+
+#begin Assets/explosion.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Assets/explosion.png
+
+#begin SpriteSheets/spritesheet_explosion.spritesheet
+/importer:SpriteSheetImporter
+/processor:PassThroughProcessor
+/build:SpriteSheets/spritesheet_explosion.spritesheet
+
