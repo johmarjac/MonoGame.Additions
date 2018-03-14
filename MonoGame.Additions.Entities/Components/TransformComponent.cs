@@ -21,5 +21,17 @@ namespace MonoGame.Additions.Entities.Components
                 return new Rectangle(Position.ToPoint(), (Size * Scale).ToPoint());
             }
         }
+        public Matrix TransformMatrix
+        {
+            get
+            {
+                return
+                    Matrix.CreateTranslation(new Vector3(Position, 0)) *
+                    Matrix.CreateTranslation(new Vector3(-Origin, 0)) *
+                    Matrix.CreateRotationZ(Rotation) *
+                    Matrix.CreateScale(Scale, Scale, Scale) *
+                    Matrix.CreateTranslation(new Vector3(Origin, 0));
+            }
+        }
     }
 }
