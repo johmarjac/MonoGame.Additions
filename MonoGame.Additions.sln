@@ -15,6 +15,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MonoGame.Additions.ContentP
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MonoGame.Additions.Tests", "MonoGame.Additions.Tests\MonoGame.Additions.Tests.csproj", "{68288A78-808D-424D-BD6E-2517EC23518A}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Demos", "Demos", "{EB31A70C-42CD-4770-8ED4-CA1D2F7785CF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PlatformerGame", "PlatformerGame\PlatformerGame.csproj", "{6BDE3F12-2946-4B7F-B272-8AACE8A8F42D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -45,9 +49,16 @@ Global
 		{68288A78-808D-424D-BD6E-2517EC23518A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{68288A78-808D-424D-BD6E-2517EC23518A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{68288A78-808D-424D-BD6E-2517EC23518A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6BDE3F12-2946-4B7F-B272-8AACE8A8F42D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6BDE3F12-2946-4B7F-B272-8AACE8A8F42D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6BDE3F12-2946-4B7F-B272-8AACE8A8F42D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6BDE3F12-2946-4B7F-B272-8AACE8A8F42D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{6BDE3F12-2946-4B7F-B272-8AACE8A8F42D} = {EB31A70C-42CD-4770-8ED4-CA1D2F7785CF}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {CEE6D2BC-DE01-4ABD-B583-5530870389FD}

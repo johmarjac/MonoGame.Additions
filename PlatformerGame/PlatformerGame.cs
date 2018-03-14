@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using MonoGame.Additions.Scenes;
 
 namespace PlatformerGame
 {
@@ -8,7 +9,7 @@ namespace PlatformerGame
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
 
-        SceneFactory sceneFactory;
+        SceneFactory SceneFactory => Services.GetService<SceneFactory>();
         
         public PlatformerGame()
         {
@@ -18,7 +19,7 @@ namespace PlatformerGame
         
         protected override void Initialize()
         {
-
+            Services.AddService(new SceneFactory(this));
             base.Initialize();
         }
         
@@ -35,14 +36,15 @@ namespace PlatformerGame
         
         protected override void Update(GameTime gameTime)
         {
-
+            Services.GetService<SceneFactory>().Update(gameTime);
             base.Update(gameTime);
         }
         
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
-            
+
+            Services.GetService<SceneFactory>().Draw(gameTime);
 
 
             base.Draw(gameTime);
