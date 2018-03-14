@@ -43,9 +43,11 @@
     <ApplicationManifest>app.manifest</ApplicationManifest>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Entities\EntityFactory.cs" />
     <Compile Include="PlatformerGame.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Scenes\InGame.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="MonoGame.Framework">
@@ -108,6 +110,10 @@
     <None Include="app.manifest" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\MonoGame.Additions.Entities\MonoGame.Additions.Entities.csproj">
+      <Project>{76CBDEC1-2D2A-40B1-9492-3D94AE932BB0}</Project>
+      <Name>MonoGame.Additions.Entities</Name>
+    </ProjectReference>
     <ProjectReference Include="..\MonoGame.Additions\MonoGame.Additions.csproj">
       <Project>{28D29D6B-CA6A-4B07-A59C-113DB21D55BB}</Project>
       <Name>MonoGame.Additions</Name>
