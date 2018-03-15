@@ -121,6 +121,10 @@
       <Project>{A592EA6E-CB6B-45E6-95B1-D6B953E86EF6}</Project>
       <Name>MonoGame.Additions.ContentPipeline</Name>
     </ProjectReference>
+    <ProjectReference Include="..\MonoGame.Additions.Entities\MonoGame.Additions.Entities.csproj">
+      <Project>{76CBDEC1-2D2A-40B1-9492-3D94AE932BB0}</Project>
+      <Name>MonoGame.Additions.Entities</Name>
+    </ProjectReference>
     <ProjectReference Include="..\MonoGame.Additions.Tiled\MonoGame.Additions.Tiled.csproj">
       <Project>{B6111AD2-78FF-47A4-86F4-E20B8D532D41}</Project>
       <Name>MonoGame.Additions.Tiled</Name>

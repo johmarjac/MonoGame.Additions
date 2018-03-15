@@ -3,7 +3,9 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using MonoGame.Additions.Adapters;
 using MonoGame.Additions.Animations;
+using MonoGame.Additions.Entities.Components;
 using MonoGame.Additions.Tiled;
+using System.Linq;
 
 namespace MonoGame.Additions.Tests
 {
@@ -20,6 +22,8 @@ namespace MonoGame.Additions.Tests
         SpriteSheetAnimations explosion;
         SpriteSheetAnimationsRenderer animationRenderer;
 
+        TransformComponent transform;
+
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
@@ -34,6 +38,7 @@ namespace MonoGame.Additions.Tests
             camera = new Camera2D(new WindowViewportAdapter(Window, GraphicsDevice));
             mapRenderer = new TiledMapRenderer(GraphicsDevice);
             animationRenderer = new SpriteSheetAnimationsRenderer(GraphicsDevice);
+            transform = new TransformComponent();
 
             base.Initialize();
         }
@@ -47,6 +52,7 @@ namespace MonoGame.Additions.Tests
             alienGreenAnimations = Content.Load<SpriteSheetAnimations>("SpriteSheetAnimations/alienGreen");
             explosion = Content.Load<SpriteSheetAnimations>("SpriteSheetAnimations/explosion");
 
+            transform.Size = new Vector2(alienGreenAnimations.SpriteSheet.SpriteWidth, alienGreenAnimations.SpriteSheet.SpriteHeight);
             for (int i = 0; i < 74; i++)
             {
                 explosion.Animations[0].Frames.Add(new SpriteSheetAnimationFrame()
@@ -63,22 +69,26 @@ namespace MonoGame.Additions.Tests
             // TODO: Unload any non ContentManager content here
         }
 
+        Vector2 target;
+        Vector2 velocity;
+
         protected override void Update(GameTime gameTime)
         {
-            var state = Keyboard.GetState();
+            var mouseState = Mouse.GetState();
+            target = mouseState.Position.ToVector2();
 
-            if (state.IsKeyDown(Keys.D))
-            {
-                //WASD = new Vector2(1f, WASD.Y);
-                alienGreenAnimations.Play("player_movement");
-                alienGreenAnimations.SpriteEffects = SpriteEffects.None;
-            }
-            else if (state.IsKeyDown(Keys.A))
-            {
-                alienGreenAnimations.Play("player_movement");
+            float ease = 0.1f;
+            velocity = new Vector2((target.X - (transform.Position.X + (transform.Size.X / 2))) * ease, (target.Y - (transform.Position.Y + (transform.Size.Y / 2))) * ease);
+
+            transform.Position += velocity;
+
+            if (velocity.X < 0)
                 alienGreenAnimations.SpriteEffects = SpriteEffects.FlipHorizontally;
-                //WASD = new Vector2(-1f, WASD.Y);
-            }
+            else
+                alienGreenAnimations.SpriteEffects = SpriteEffects.None;
+
+            if (velocity.Length() > 1f)
+                alienGreenAnimations.Play("player_movement");
             else
                 alienGreenAnimations.Play("player_stand");
 
@@ -93,9 +103,11 @@ namespace MonoGame.Additions.Tests
 
             var transformMatrix = camera.GetViewMatrix();
 
+            var alienTransform = transform.TransformMatrix;
+
             mapRenderer.Draw(map, ref transformMatrix);
             animationRenderer.Draw(explosion, ref transformMatrix);
-            animationRenderer.Draw(alienGreenAnimations, ref transformMatrix);
+            animationRenderer.Draw(alienGreenAnimations, ref alienTransform);
 
             base.Draw(gameTime);
         }
