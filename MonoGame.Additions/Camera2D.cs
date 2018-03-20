@@ -3,7 +3,7 @@ using MonoGame.Additions.Adapters;
 
 namespace MonoGame.Additions
 {
-    public class Camera2D
+    public class Camera2D : ITransform2D
     {
         public Camera2D(ViewportAdapter adapter)
         {
@@ -23,7 +23,7 @@ namespace MonoGame.Additions
                 Matrix.CreateTranslation(new Vector3(-Position, 0f)) *
                 Matrix.CreateTranslation(new Vector3(-Origin, 0)) *
                 Matrix.CreateRotationZ(Rotation) *
-                Matrix.CreateScale(Zoom, Zoom, 1) *
+                Matrix.CreateScale(Scale, Scale, 1) *
                 Matrix.CreateTranslation(new Vector3(Origin, 0));
         }
 
@@ -35,8 +35,16 @@ namespace MonoGame.Additions
         public Vector2 Position { get; set; }
         public Vector2 Origin { get; set; }
         public float Rotation { get; set; }
-        public float Zoom { get; set; } = 1f;
-
         public ViewportAdapter Adapter { get; }
+        public Vector2 Size { get; private set; }
+        public float Scale { get; set; } = 1f;
+        public Rectangle BoundingRectangle
+        {
+            get
+            {
+                return
+                    new Rectangle(Position.ToPoint(), Size.ToPoint());
+            }
+        }
     }
 }
