@@ -4,6 +4,7 @@ using Microsoft.Xna.Framework.Input;
 using MonoGame.Additions.Adapters;
 using MonoGame.Additions.Animations;
 using MonoGame.Additions.Entities.Components;
+using MonoGame.Additions.Primitives;
 using MonoGame.Additions.Tiled;
 using System.Linq;
 
@@ -24,6 +25,8 @@ namespace MonoGame.Additions.Tests
 
         TransformComponent transform;
 
+        Circle filledCircle;
+
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
@@ -40,6 +43,8 @@ namespace MonoGame.Additions.Tests
             animationRenderer = new SpriteSheetAnimationsRenderer(GraphicsDevice);
             transform = new TransformComponent();
 
+            filledCircle = PrimitiveFactory.CreateCircle(200, Color.Black);
+
             base.Initialize();
         }
 
@@ -51,8 +56,7 @@ namespace MonoGame.Additions.Tests
             map = Content.Load<TiledMap>("Levels/test");
             alienGreenAnimations = Content.Load<SpriteSheetAnimations>("SpriteSheetAnimations/alienGreen");
             explosion = Content.Load<SpriteSheetAnimations>("SpriteSheetAnimations/explosion");
-
-            transform.Size = new Vector2(alienGreenAnimations.SpriteSheet.SpriteWidth, alienGreenAnimations.SpriteSheet.SpriteHeight);
+            
             for (int i = 0; i < 74; i++)
             {
                 explosion.Animations[0].Frames.Add(new SpriteSheetAnimationFrame()
@@ -78,7 +82,7 @@ namespace MonoGame.Additions.Tests
             target = mouseState.Position.ToVector2();
 
             float ease = 0.1f;
-            velocity = new Vector2((target.X - (transform.Position.X + (transform.Size.X / 2))) * ease, (target.Y - (transform.Position.Y + (transform.Size.Y / 2))) * ease);
+            velocity = new Vector2((target.X - transform.Position.X) * ease, (target.Y - transform.Position.Y) * ease);
 
             transform.Position += velocity;
 
@@ -101,13 +105,17 @@ namespace MonoGame.Additions.Tests
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
+
             var transformMatrix = camera.GetViewMatrix();
 
             var alienTransform = transform.TransformMatrix;
 
+
+
             mapRenderer.Draw(map, ref transformMatrix);
             animationRenderer.Draw(explosion, ref transformMatrix);
-            animationRenderer.Draw(alienGreenAnimations, ref alienTransform);
+            //animationRenderer.Draw(alienGreenAnimations, ref alienTransform);
+            spriteBatch.DrawCircle(filledCircle, ref alienTransform);
 
             base.Draw(gameTime);
         }
