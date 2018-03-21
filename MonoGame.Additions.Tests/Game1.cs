@@ -2,14 +2,11 @@
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using MonoGame.Additions.Adapters;
-using MonoGame.Additions.Animations;
 using MonoGame.Additions.Entities;
 using MonoGame.Additions.Entities.Components;
 using MonoGame.Additions.Primitives;
 using MonoGame.Additions.Tests.Collision;
-using MonoGame.Additions.Tiled;
 using System;
-using System.Linq;
 
 namespace MonoGame.Additions.Tests
 {
@@ -68,7 +65,7 @@ namespace MonoGame.Additions.Tests
             counter = new FrameCounter();
             camera = new Camera2D(new WindowViewportAdapter(Window, GraphicsDevice));
             Services.AddService(camera);
-            
+                        
             ecs = new EntityComponentSystem(this);
             ecs.Initialize();
             
