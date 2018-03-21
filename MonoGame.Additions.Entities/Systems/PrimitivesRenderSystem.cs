@@ -11,14 +11,17 @@ namespace MonoGame.Additions.Entities.Systems
     {
         public override void DrawEntity(Entity entity, GameTime gameTime)
         {
+            var camera = Game.Services.GetService<Camera2D>();
             var transform = entity.GetComponent<TransformComponent>();
             var primitives = entity.GetComponents<PrimitiveComponent>();
             var projection = Matrix.CreateOrthographicOffCenter(0, GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height, 0, 0, -1);
             var effect = new BasicEffect(GraphicsDevice);
-            
+
             effect.VertexColorEnabled = true;
             effect.Projection = projection;
-            effect.View = transform.TransformMatrix + Game.Services.GetService<Camera2D>().GetViewMatrix();
+            effect.View = transform.TransformMatrix;
+            if (camera != null)
+                effect.View += camera.GetViewMatrix();
 
             foreach(var primitive in primitives)
             {
