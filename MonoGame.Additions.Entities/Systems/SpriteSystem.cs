@@ -25,7 +25,7 @@ namespace MonoGame.Additions.Entities.Systems
                 Color.White,
                 transform.Rotation,
                 Vector2.Zero,
-                transform.Scale,
+                1f,
                 sprite.Sprite.Effect, 1f);
         }
     }

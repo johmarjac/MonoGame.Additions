@@ -7,6 +7,9 @@ namespace MonoGame.Additions
     {
         public Camera2D(ViewportAdapter adapter)
         {
+            Position = Vector2.Zero;
+            Rotation = 0;
+            Size = Vector2.One;
             Adapter = adapter;
         }
 
@@ -21,10 +24,8 @@ namespace MonoGame.Additions
         {
             return
                 Matrix.CreateTranslation(new Vector3(-Position, 0f)) *
-                Matrix.CreateTranslation(new Vector3(-Origin, 0)) *
                 Matrix.CreateRotationZ(Rotation) *
-                Matrix.CreateScale(Scale, Scale, 1) *
-                Matrix.CreateTranslation(new Vector3(Origin, 0));
+                Matrix.CreateScale(Size.X, Size.Y, 1);
         }
 
         public void Move(Vector2 direction)
@@ -33,12 +34,10 @@ namespace MonoGame.Additions
         }
 
         public Vector2 Position { get; set; }
-        public Vector2 Origin { get; set; }
         public float Rotation { get; set; }
-        public ViewportAdapter Adapter { get; }
-        public Vector2 Size { get; private set; }
-        public float Scale { get; set; } = 1f;
-        public Rectangle BoundingRectangle
+        public Vector2 Size { get; set; }
+
+        public Rectangle Bounds
         {
             get
             {
@@ -46,5 +45,7 @@ namespace MonoGame.Additions
                     new Rectangle(Position.ToPoint(), Size.ToPoint());
             }
         }
+        
+        public ViewportAdapter Adapter { get; }
     }
 }

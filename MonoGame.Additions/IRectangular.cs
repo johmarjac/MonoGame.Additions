@@ -4,6 +4,6 @@ namespace MonoGame.Additions
 {
     public interface IRectangular
     {
-        Rectangle BoundingRectangle { get; }
+        Rectangle Bounds { get; }
     }
 }

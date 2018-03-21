@@ -6,31 +6,31 @@ namespace MonoGame.Additions.Entities.Components
     {
         public TransformComponent()
         {
-            Scale = 1f;
+            Position = Vector2.Zero;
+            Rotation = 0;
+            Size = Vector2.One;
         }
 
         public Vector2 Position { get; set; }
-        public Vector2 Size { get; set; }
-        public Vector2 Origin { get; set; }
-        public float Scale { get; set; }
         public float Rotation { get; set; }
-        public Rectangle BoundingRectangle
+        public Vector2 Size { get; set; }
+
+        public Rectangle Bounds
         {
             get
             {
-                return new Rectangle(Position.ToPoint(), (Size * Scale).ToPoint());
+                return new Rectangle(Position.ToPoint(), Size.ToPoint());
             }
         }
+
         public Matrix TransformMatrix
         {
             get
             {
                 return
                     Matrix.CreateTranslation(new Vector3(Position, 0)) *
-                    Matrix.CreateTranslation(new Vector3(-Origin, 0)) *
                     Matrix.CreateRotationZ(Rotation) *
-                    Matrix.CreateScale(Scale, Scale, Scale) *
-                    Matrix.CreateTranslation(new Vector3(Origin, 0));
+                    Matrix.CreateScale(Size.X, Size.Y, 1f);
             }
         }
     }
