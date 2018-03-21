@@ -11,6 +11,11 @@ namespace MonoGame.Additions.Entities.Components
             Size = Vector2.One;
         }
 
+        public void Move(Vector2 delta)
+        {
+            Position += Vector2.Transform(delta, Matrix.CreateRotationZ(-Rotation));
+        }
+
         public Vector2 Position { get; set; }
         public float Rotation { get; set; }
         public Vector2 Size { get; set; }

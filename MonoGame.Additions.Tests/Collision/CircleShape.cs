@@ -6,11 +6,6 @@ namespace MonoGame.Additions.Tests.Collision
     {
         public float Radius { get; set; }
 
-        public CircleShape(float radius)
-        {
-            Radius = radius;
-        }
-
         public Vector2 CircleCenterPoint
         {
             get

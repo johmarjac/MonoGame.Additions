@@ -3,9 +3,12 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using MonoGame.Additions.Adapters;
 using MonoGame.Additions.Animations;
+using MonoGame.Additions.Entities;
 using MonoGame.Additions.Entities.Components;
 using MonoGame.Additions.Primitives;
+using MonoGame.Additions.Tests.Collision;
 using MonoGame.Additions.Tiled;
+using System;
 using System.Linq;
 
 namespace MonoGame.Additions.Tests
@@ -16,16 +19,11 @@ namespace MonoGame.Additions.Tests
         SpriteBatch spriteBatch;
 
         Camera2D camera;
-        TiledMap map;
-        TiledMapRenderer mapRenderer;
+        EntityComponentSystem ecs;
+        Random rnd;
 
-        SpriteSheetAnimations alienGreenAnimations;
-        SpriteSheetAnimations explosion;
-        SpriteSheetAnimationsRenderer animationRenderer;
-
-        TransformComponent transform;
-
-        Circle filledCircle;
+        FrameCounter counter;
+        SpriteFont font;
 
         public Game1()
         {
@@ -34,89 +32,106 @@ namespace MonoGame.Additions.Tests
             graphics.PreferredBackBufferHeight = 640;
             Content.RootDirectory = "Content";
             IsMouseVisible = true;
+
+            rnd = new Random();
+        }
+
+        public void CreateCircle(Vector2 position, int radius = 50)
+        {
+            var entity = ecs.CreateEntity();
+
+            entity.Attach<TransformComponent>()
+                .Position = position;
+
+            entity.Attach<PrimitiveComponent>()
+                .Primitive = Circle.Create(radius, Color.Red);
+
+            entity.Attach<CircleShape>()
+                .Radius = radius;
+        }
+
+        public Entity CreateRectangle(Vector2 position, float width, float height)
+        {
+            var entity = ecs.CreateEntity();
+
+            entity.Attach<TransformComponent>()
+                .Position = position;
+
+            entity.Attach<PrimitiveComponent>()
+                .Primitive = Primitives.Rectangle.Create(width, height, Color.White);
+
+            return entity;
         }
 
         protected override void Initialize()
         {
+            counter = new FrameCounter();
             camera = new Camera2D(new WindowViewportAdapter(Window, GraphicsDevice));
-            mapRenderer = new TiledMapRenderer(GraphicsDevice);
-            animationRenderer = new SpriteSheetAnimationsRenderer(GraphicsDevice);
-            transform = new TransformComponent();
-
-            filledCircle = PrimitiveFactory.CreateCircle(200, Color.Black);
-
+            Services.AddService(camera);
+            
+            ecs = new EntityComponentSystem(this);
+            ecs.Initialize();
+            
             base.Initialize();
         }
+
+        Entity rect;
 
         protected override void LoadContent()
         {
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
+            font = Content.Load<SpriteFont>("Fonts/default");
 
-            map = Content.Load<TiledMap>("Levels/test");
-            alienGreenAnimations = Content.Load<SpriteSheetAnimations>("SpriteSheetAnimations/alienGreen");
-            explosion = Content.Load<SpriteSheetAnimations>("SpriteSheetAnimations/explosion");
-            
-            for (int i = 0; i < 74; i++)
-            {
-                explosion.Animations[0].Frames.Add(new SpriteSheetAnimationFrame()
-                {
-                    Duration = 50,
-                    Index = i
-                });
-            }
-            explosion.Play("explosion");
+            rect = CreateRectangle(new Vector2(0, 0), 400, 200);
+            //CreateRectangle(new Vector2(rnd.Next(0, GraphicsDevice.Viewport.Width), rnd.Next(0, GraphicsDevice.Viewport.Height)), 200, 100);
         }
 
         protected override void UnloadContent()
         {
             // TODO: Unload any non ContentManager content here
         }
-
-        Vector2 target;
-        Vector2 velocity;
-
+        
         protected override void Update(GameTime gameTime)
         {
-            var mouseState = Mouse.GetState();
-            target = mouseState.Position.ToVector2();
+            ecs.Update(gameTime);
 
-            float ease = 0.1f;
-            velocity = new Vector2((target.X - transform.Position.X) * ease, (target.Y - transform.Position.Y) * ease);
+            var kbdState = Keyboard.GetState();
+            var speed = 500;
 
-            transform.Position += velocity;
+            if (kbdState.IsKeyDown(Keys.D))
+                camera.Move(new Vector2(speed, 0) * (float)gameTime.ElapsedGameTime.TotalSeconds);
+            else if (kbdState.IsKeyDown(Keys.A))
+                camera.Move(new Vector2(-speed, 0) * (float)gameTime.ElapsedGameTime.TotalSeconds);
 
-            if (velocity.X < 0)
-                alienGreenAnimations.SpriteEffects = SpriteEffects.FlipHorizontally;
-            else
-                alienGreenAnimations.SpriteEffects = SpriteEffects.None;
+            if (kbdState.IsKeyDown(Keys.W))
+                camera.Move(new Vector2(0, -speed) * (float)gameTime.ElapsedGameTime.TotalSeconds);
+            else if (kbdState.IsKeyDown(Keys.S))
+                camera.Move(new Vector2(0, speed) * (float)gameTime.ElapsedGameTime.TotalSeconds);
 
-            if (velocity.Length() > 1f)
-                alienGreenAnimations.Play("player_movement");
-            else
-                alienGreenAnimations.Play("player_stand");
+            if (kbdState.IsKeyDown(Keys.Right))
+                rect.GetComponent<TransformComponent>().Move(new Vector2(speed, 0) * (float)gameTime.ElapsedGameTime.TotalSeconds);
+            else if (kbdState.IsKeyDown(Keys.Left))
+                rect.GetComponent<TransformComponent>().Move(new Vector2(-speed, 0) * (float)gameTime.ElapsedGameTime.TotalSeconds);
 
-            animationRenderer.Update(explosion, gameTime);
-            animationRenderer.Update(alienGreenAnimations, gameTime);
+            if (kbdState.IsKeyDown(Keys.Up))
+                rect.GetComponent<TransformComponent>().Move(new Vector2(0, -speed) * (float)gameTime.ElapsedGameTime.TotalSeconds);
+            else if (kbdState.IsKeyDown(Keys.Down))
+                rect.GetComponent<TransformComponent>().Move(new Vector2(0, speed) * (float)gameTime.ElapsedGameTime.TotalSeconds);
+
             base.Update(gameTime);
         }
 
         protected override void Draw(GameTime gameTime)
         {
+            counter.Update((float)gameTime.ElapsedGameTime.TotalSeconds);
+            
             GraphicsDevice.Clear(Color.CornflowerBlue);
+            ecs.Draw(gameTime);
 
-
-            var transformMatrix = camera.GetViewMatrix();
-
-            var alienTransform = transform.TransformMatrix;
-
-
-
-            mapRenderer.Draw(map, ref transformMatrix);
-            animationRenderer.Draw(explosion, ref transformMatrix);
-            //animationRenderer.Draw(alienGreenAnimations, ref alienTransform);
-            spriteBatch.DrawCircle(filledCircle, ref alienTransform);
-
+            spriteBatch.Begin();
+            spriteBatch.DrawString(font, $"FPS: {counter.AverageFramesPerSecond}", Vector2.Zero, Color.White);
+            spriteBatch.End();
             base.Draw(gameTime);
         }
     }
