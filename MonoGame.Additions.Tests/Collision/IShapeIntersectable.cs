@@ -3,6 +3,5 @@
     public interface IShapeIntersectable
     {
         bool IntersectingWith(CircleShape other);
-        bool IntersectingWith(RectangleShape other);
     }
 }

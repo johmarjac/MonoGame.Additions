@@ -13,12 +13,12 @@ namespace MonoGame.Additions.Tests.Collision
 
         public Vector2 GetCircleCenter()
         {
-            return (Position + Origin) * 0.5f;
+            return (Transform.Position + Transform.Origin) * 0.5f;
         }
 
-        public override bool IntersectingWith(CircleShape other)
+        public override bool IntersectingWith(CircleShape other) 
         {
-            return (circle.GetCircleCenter() - GetCircleCenter()).LengthSquared() < (Radius * Radius);
+            return (other.GetCircleCenter() - GetCircleCenter()).LengthSquared() < (Radius * Radius);
         }
     }
 }

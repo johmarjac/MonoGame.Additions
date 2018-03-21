@@ -45,7 +45,6 @@
   <ItemGroup>
     <Compile Include="Collision\CircleShape.cs" />
     <Compile Include="Collision\IShapeIntersectable.cs" />
-    <Compile Include="Collision\RectangleShape.cs" />
     <Compile Include="Collision\Shape.cs" />
     <Compile Include="FrameCounter.cs" />
     <Compile Include="Game1.cs" />
