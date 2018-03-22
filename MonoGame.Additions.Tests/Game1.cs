@@ -2,10 +2,11 @@
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using MonoGame.Additions.Adapters;
+using MonoGame.Additions.Collisions;
+using MonoGame.Additions.Collisions.Systems;
 using MonoGame.Additions.Entities;
 using MonoGame.Additions.Entities.Components;
 using MonoGame.Additions.Primitives;
-using MonoGame.Additions.Tests.Collision;
 using System;
 
 namespace MonoGame.Additions.Tests
@@ -33,7 +34,7 @@ namespace MonoGame.Additions.Tests
             rnd = new Random();
         }
 
-        public void CreateCircle(Vector2 position, int radius = 50)
+        public Entity CreateCircle(Vector2 position, int radius = 50)
         {
             var entity = ecs.CreateEntity();
 
@@ -43,8 +44,10 @@ namespace MonoGame.Additions.Tests
             entity.Attach<PrimitiveComponent>()
                 .Primitive = Circle.Create(radius, Color.Red);
 
-            entity.Attach<CircleShape>()
+            entity.Attach<CircleCollider>()
                 .Radius = radius;
+
+            return entity;
         }
 
         public Entity CreateRectangle(Vector2 position, float width, float height)
@@ -57,6 +60,9 @@ namespace MonoGame.Additions.Tests
             entity.Attach<PrimitiveComponent>()
                 .Primitive = Primitives.Rectangle.Create(width, height, Color.White);
 
+            entity.Attach<RectangleCollider>()
+                .Size = new Vector2(width, height);
+
             return entity;
         }
 
@@ -68,20 +74,24 @@ namespace MonoGame.Additions.Tests
                         
             ecs = new EntityComponentSystem(this);
             ecs.Initialize();
+            var c = new CollisionSystem();
             
             base.Initialize();
         }
-
-        Entity rect;
+        
+        Entity circle;
+        Entity circle2;
 
         protected override void LoadContent()
         {
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
             font = Content.Load<SpriteFont>("Fonts/default");
+            
+            circle2 = CreateCircle(Vector2.Zero, 40);
+            circle2.Attach<RigidbodyComponent>();
 
-            rect = CreateRectangle(new Vector2(0, 0), 400, 200);
-            //CreateRectangle(new Vector2(rnd.Next(0, GraphicsDevice.Viewport.Width), rnd.Next(0, GraphicsDevice.Viewport.Height)), 200, 100);
+            circle = CreateCircle(new Vector2(200, 200), 40);
         }
 
         protected override void UnloadContent()
@@ -95,7 +105,7 @@ namespace MonoGame.Additions.Tests
 
             var kbdState = Keyboard.GetState();
             var speed = 500;
-
+            
             if (kbdState.IsKeyDown(Keys.D))
                 camera.Move(new Vector2(speed, 0) * (float)gameTime.ElapsedGameTime.TotalSeconds);
             else if (kbdState.IsKeyDown(Keys.A))
@@ -107,14 +117,22 @@ namespace MonoGame.Additions.Tests
                 camera.Move(new Vector2(0, speed) * (float)gameTime.ElapsedGameTime.TotalSeconds);
 
             if (kbdState.IsKeyDown(Keys.Right))
-                rect.GetComponent<TransformComponent>().Move(new Vector2(speed, 0) * (float)gameTime.ElapsedGameTime.TotalSeconds);
+                circle.GetComponent<TransformComponent>().Move(new Vector2(speed, 0) * (float)gameTime.ElapsedGameTime.TotalSeconds);
             else if (kbdState.IsKeyDown(Keys.Left))
-                rect.GetComponent<TransformComponent>().Move(new Vector2(-speed, 0) * (float)gameTime.ElapsedGameTime.TotalSeconds);
+                circle.GetComponent<TransformComponent>().Move(new Vector2(-speed, 0) * (float)gameTime.ElapsedGameTime.TotalSeconds);
 
             if (kbdState.IsKeyDown(Keys.Up))
-                rect.GetComponent<TransformComponent>().Move(new Vector2(0, -speed) * (float)gameTime.ElapsedGameTime.TotalSeconds);
+                circle.GetComponent<TransformComponent>().Move(new Vector2(0, -speed) * (float)gameTime.ElapsedGameTime.TotalSeconds);
             else if (kbdState.IsKeyDown(Keys.Down))
-                rect.GetComponent<TransformComponent>().Move(new Vector2(0, speed) * (float)gameTime.ElapsedGameTime.TotalSeconds);
+                circle.GetComponent<TransformComponent>().Move(new Vector2(0, speed) * (float)gameTime.ElapsedGameTime.TotalSeconds);
+
+            var circle1Collider = circle.GetComponent<CircleCollider>();
+            var circle2Collider = circle2.GetComponent<CircleCollider>();
+            
+            circle2.GetComponent<RigidbodyComponent>()
+                .EaseTo(camera.ScreenToWorld(Mouse.GetState().Position.ToVector2()));
+
+            Window.Title = $"Collision: {circle2Collider.IntersectsWith(circle1Collider)}";
 
             base.Update(gameTime);
         }

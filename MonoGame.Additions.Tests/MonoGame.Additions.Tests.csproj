@@ -43,9 +43,6 @@
     <ApplicationManifest>app.manifest</ApplicationManifest>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Collision\CircleShape.cs" />
-    <Compile Include="Collision\IShapeIntersectable.cs" />
-    <Compile Include="Collision\Shape.cs" />
     <Compile Include="FrameCounter.cs" />
     <Compile Include="Game1.cs" />
     <Compile Include="Program.cs" />
@@ -119,6 +116,10 @@
     <ProjectReference Include="..\MonoGame.Additions.Animations\MonoGame.Additions.Animations.csproj">
       <Project>{D7F31E60-C5BF-41F3-B1F4-F4BAC176AE88}</Project>
       <Name>MonoGame.Additions.Animations</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MonoGame.Additions.Collisions\MonoGame.Additions.Collisions.csproj">
+      <Project>{740b5938-2d92-46c6-b3e3-f0b2de06e497}</Project>
+      <Name>MonoGame.Additions.Collisions</Name>
     </ProjectReference>
     <ProjectReference Include="..\MonoGame.Additions.ContentPipeline\MonoGame.Additions.ContentPipeline.csproj">
       <Project>{A592EA6E-CB6B-45E6-95B1-D6B953E86EF6}</Project>
