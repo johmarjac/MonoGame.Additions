@@ -21,9 +21,9 @@ namespace MonoGame.Additions.Entities.Systems
             effect.Projection = projection;
             effect.View = transform.TransformMatrix;
             if (camera != null)
-                effect.View += camera.GetViewMatrix();
+                effect.View *= camera.GetViewMatrix();
 
-            foreach(var primitive in primitives)
+            foreach (var primitive in primitives)
             {
                 foreach(var pass in effect.CurrentTechnique.Passes)
                 {
