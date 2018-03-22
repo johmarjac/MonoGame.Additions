@@ -15,6 +15,7 @@ namespace MonoGame.Additions.Primitives
             {
                 var angle = MathHelper.ToRadians(i);
                 var vertex = new VertexPositionColor(new Vector3((float)Math.Cos(angle) * radius, (float)Math.Sin(angle) * radius, 0), color);
+                vertex.Position += new Vector3(radius, radius, 0);
 
                 vertices.Add(vertex);
             }
