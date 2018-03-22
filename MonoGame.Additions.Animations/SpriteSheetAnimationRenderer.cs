@@ -23,7 +23,7 @@ namespace MonoGame.Additions.Animations
             SpriteBatch.Begin(transformMatrix: transformMatrix);
 
             SpriteBatch.Draw(
-                animations.SpriteSheet.Image,
+                animations.SpriteSheet.Sprite.Texture,
                 new Rectangle(0, 0, animations.SpriteSheet.SpriteWidth, animations.SpriteSheet.SpriteHeight),
                 animations.SpriteSheet[animations.CurrentAnimation.Frames[animations.CurrentAnimation.CurrentFrameIndex].Index],
                 Color.White,
