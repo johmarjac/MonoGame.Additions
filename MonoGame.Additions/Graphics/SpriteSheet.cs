@@ -18,7 +18,7 @@ namespace MonoGame.Additions.Graphics
             }
         }
 
-        public Texture2D Image { get; set; }
+        public Sprite Sprite { get; set; }
 
         [JsonProperty("image")]
         public string ImageSource { get; set; }

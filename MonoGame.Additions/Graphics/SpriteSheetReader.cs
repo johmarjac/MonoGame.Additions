@@ -32,7 +32,7 @@ namespace MonoGame.Additions.Graphics
 
             var filename = Path.GetFileNameWithoutExtension(sheet.ImageSource);
 
-            sheet.Image = content.Load<Texture2D>(path + "\\" + filename);
+            sheet.Sprite = new Sprite(content.Load<Texture2D>(path + "\\" + filename));
         }
     }
 }
