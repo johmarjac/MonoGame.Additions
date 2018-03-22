@@ -43,6 +43,20 @@ namespace MonoGame.Additions
             Size = new Vector2(zoom, zoom);
         }
 
+        public Vector2 ScreenToWorld(Vector2 screenPos)
+        {
+            var viewport = Adapter.GraphicsDevice.Viewport;
+
+            return Vector2.Transform(screenPos - new Vector2(viewport.X, viewport.Y), Matrix.Invert(GetViewMatrix()));
+        }
+
+        public Vector2 WorldToScreen(Vector2 worldPos)
+        {
+            var viewport = Adapter.GraphicsDevice.Viewport;
+
+            return Vector2.Transform(worldPos + new Vector2(viewport.X, viewport.Y), GetViewMatrix());
+        }
+
         public Vector2 Position { get; set; }
         public float Rotation { get; set; }
         public Vector2 Size { get; set; }
