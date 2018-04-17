@@ -9,13 +9,6 @@ namespace PlatformerGame.Entities
     {
         public Vector2 Position => GetComponent<TransformComponent>().Position;
 
-        public float MoveSpeed { get; set; }
-
-        public Player()
-        {
-            MoveSpeed = 4f;
-        }
-
         public void PlayAnimation(string name)
         {
             GetComponent<SpriteSheetAnimationComponent>()?

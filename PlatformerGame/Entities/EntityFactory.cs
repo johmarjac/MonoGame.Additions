@@ -1,6 +1,9 @@
 ﻿using MonoGame.Additions.Animations;
 using MonoGame.Additions.Entities;
 using MonoGame.Additions.Entities.Components;
+using MonoGame.Additions.Tiled;
+using MonoGame.Additions.Tiled.Components;
+using PlatformerGame.Components;
 
 namespace PlatformerGame.Entities
 {
@@ -19,6 +22,20 @@ namespace PlatformerGame.Entities
 
             entity.Attach<SpriteSheetAnimationComponent>()
                 .Animations = playerAnimations;
+
+            entity.Attach<PlayerComponent>();
+
+            return entity;
+        }
+
+        public Level CreateLevel(TiledMap map)
+        {
+            var entity = Ecs.CreateEntity<Level>();
+
+            entity.Attach<TransformComponent>();
+
+            entity.Attach<TiledMapComponent>()
+                .Map = map;
 
             return entity;
         }
