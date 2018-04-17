@@ -17,13 +17,12 @@ namespace PlatformerGame.Scenes
         public override void Initialize()
         {
             base.Initialize();
-
-            var c = new SpriteSheetAnimationSystem();
-
+            
             ecs = new EntityComponentSystem(Game);
             ef = new EntityFactory(ecs);
             ecs.Initialize();
             ecs.RegisterSystem<TiledMapSystem>();
+            ecs.RegisterSystem<SpriteSheetAnimationSystem>();
             ecs.RegisterSystem<PlayerController>();
         }
 
