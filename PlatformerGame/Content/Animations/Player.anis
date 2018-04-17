@@ -1,0 +1,29 @@
+{
+	"spritesheet": ".\/..\/GFX\/player.spritesheet",
+	"animations": [
+		{
+			"name": "player_stand",
+			"playbackmode": "once",
+			"frames": [
+				{
+					"index": 0,
+					"duration": 1000
+				}
+			]
+		},
+		{
+			"name": "player_move",
+			"playbackmode": "loop",
+			"frames": [
+				{
+					"index": 9,
+					"duration": 200
+				},
+				{
+					"index": 10,
+					"duration": 200
+				}
+			]
+		}
+	]
+}

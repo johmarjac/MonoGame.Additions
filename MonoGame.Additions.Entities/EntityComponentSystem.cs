@@ -83,6 +83,18 @@ namespace MonoGame.Additions.Entities
             return entity;
         }
 
+        public TEntity CreateEntity<TEntity>() where TEntity : Entity, new()
+        {
+            var entity = new TEntity();
+
+            foreach (var system in _componentSystems)
+                system.Value.ComponentSystem.OnEntityCreated(entity);
+
+            _entities.Add(entity);
+
+            return entity;
+        }
+
         public void DestroyEntity(Entity entity)
         {
             if (entity == null)

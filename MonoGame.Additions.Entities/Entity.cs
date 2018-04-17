@@ -6,9 +6,9 @@ using System.Linq;
 
 namespace MonoGame.Additions.Entities
 {
-    public sealed class Entity
+    public class Entity
     {
-        internal Entity()
+        public Entity()
         {
             _components = new List<EntityComponent>();
         }

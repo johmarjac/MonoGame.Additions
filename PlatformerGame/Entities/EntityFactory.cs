@@ -1,4 +1,5 @@
-﻿using MonoGame.Additions.Entities;
+﻿using MonoGame.Additions.Animations;
+using MonoGame.Additions.Entities;
 using MonoGame.Additions.Entities.Components;
 
 namespace PlatformerGame.Entities
@@ -10,11 +11,14 @@ namespace PlatformerGame.Entities
             Ecs = ecs;
         }
 
-        public Entity CreatePlayer()
+        public Player CreatePlayer(SpriteSheetAnimations playerAnimations)
         {
-            var entity = Ecs.CreateEntity();
+            var entity = Ecs.CreateEntity<Player>();
 
             entity.Attach<TransformComponent>();
+
+            entity.Attach<SpriteSheetAnimationComponent>()
+                .Animations = playerAnimations;
 
             return entity;
         }

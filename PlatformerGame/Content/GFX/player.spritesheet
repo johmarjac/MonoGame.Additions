@@ -1,0 +1,7 @@
+{
+	"image": ".\/..\/Assets\/player.png",
+	"columns": 9,
+	"rows": 3,
+	"spritewidth": 80,
+	"spriteheight": 110
+}

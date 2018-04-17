@@ -10,6 +10,29 @@
 
 #-------------------------------- References --------------------------------#
 
+/reference:..\..\MonoGame.Additions.ContentPipeline\bin\Debug\MonoGame.Additions.ContentPipeline.dll
 
 #---------------------------------- Content ---------------------------------#
+
+#begin Assets/player.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Assets/player.png
+
+#begin GFX/player.spritesheet
+/importer:SpriteSheetImporter
+/processor:PassThroughProcessor
+/build:GFX/player.spritesheet
+
+#begin Animations/Player.anis
+/importer:SpriteSheetAnimationImporter
+/processor:PassThroughProcessor
+/build:Animations/Player.anis
 
