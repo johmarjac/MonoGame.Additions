@@ -9,6 +9,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\MonoGame.Additions.Entities\MonoGame.Additions.Entities.csproj" />
     <ProjectReference Include="..\MonoGame.Additions\MonoGame.Additions.csproj" />
   </ItemGroup>
 
