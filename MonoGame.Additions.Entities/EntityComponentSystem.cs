@@ -49,6 +49,8 @@ namespace MonoGame.Additions.Entities
 
             obj.Game = Game;
 
+            obj.Initialize();
+
             var requiredComponents = new List<Type>();
             foreach (var attr in typeof(T).GetCustomAttributes(typeof(RequiredComponentsAttribute), true) as RequiredComponentsAttribute[])
             {
