@@ -1,4 +1,5 @@
 ﻿using MonoGame.Additions.Entities;
+using MonoGame.Additions.Entities.Components;
 
 namespace PlatformerGame.Entities
 {
@@ -12,6 +13,8 @@ namespace PlatformerGame.Entities
         public Entity CreatePlayer()
         {
             var entity = Ecs.CreateEntity();
+
+            entity.Attach<TransformComponent>();
 
             return entity;
         }

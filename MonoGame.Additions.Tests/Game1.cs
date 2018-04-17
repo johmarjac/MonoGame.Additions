@@ -130,7 +130,7 @@ namespace MonoGame.Additions.Tests
             var circle2Collider = circle2.GetComponent<CircleCollider>();
             
             circle2.GetComponent<RigidbodyComponent>()
-                .EaseTo(camera.ScreenToWorld(Mouse.GetState().Position.ToVector2()));
+                .EaseOut(camera.ScreenToWorld(Mouse.GetState().Position.ToVector2()));
 
             Window.Title = $"Collision: {circle2Collider.IntersectsWith(circle1Collider)}";
 

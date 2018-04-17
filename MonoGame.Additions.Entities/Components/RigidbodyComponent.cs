@@ -7,7 +7,7 @@ namespace MonoGame.Additions.Entities.Components
         public Vector2 Velocity { get; set; }
         public bool IsStatic { get; set; }
 
-        public void EaseTo(Vector2 destination, float ease = 0.05f)
+        public void EaseOut(Vector2 destination, float ease = 0.05f)
         {
             var transform = Entity.GetComponent<TransformComponent>();
 
