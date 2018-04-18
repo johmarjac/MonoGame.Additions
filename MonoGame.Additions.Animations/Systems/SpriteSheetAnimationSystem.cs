@@ -31,8 +31,12 @@ namespace MonoGame.Additions.Animations.Systems
             var animationsComponent = entity.GetComponent<SpriteSheetAnimationComponent>();
             var transformComponent = entity.GetComponent<TransformComponent>();
 
+            var camera = Game.Services.GetService<Camera2D>();
+            
             var transformMatrix = transformComponent.TransformMatrix;
-
+            if (camera != null)
+                transformMatrix = Matrix.Multiply(camera.GetViewMatrix(), transformMatrix);
+            
             _renderer.Draw(animationsComponent.Animations, ref transformMatrix);
 
             base.DrawEntity(entity, gameTime);

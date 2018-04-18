@@ -23,8 +23,12 @@ namespace MonoGame.Additions.Tiled.Systems
 
             var transformComponent = entity.GetComponent<TransformComponent>();
             var mapComponent = entity.GetComponent<TiledMapComponent>();
+            var camera = Game.Services.GetService<Camera2D>();
 
             var transformMatrix = transformComponent.TransformMatrix;
+            if (camera != null)
+                transformMatrix = Matrix.Multiply(camera.GetViewMatrix(), transformMatrix);
+
 
             _renderer.Draw(mapComponent.Map, ref transformMatrix);
         }

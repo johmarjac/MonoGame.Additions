@@ -1,5 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using MonoGame.Additions;
+using MonoGame.Additions.Adapters;
 using MonoGame.Additions.Scenes;
 using PlatformerGame.Scenes;
 
@@ -20,6 +22,8 @@ namespace PlatformerGame
         
         protected override void Initialize()
         {
+            Services.AddService(new Camera2D(new WindowViewportAdapter(Window, GraphicsDevice)));
+
             Services.AddService(new SceneFactory(this));
 
             Services.GetService<SceneFactory>().AddScene<InGame>();

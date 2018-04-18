@@ -20,6 +20,9 @@ namespace MonoGame.Additions.Entities.Components
         public float Rotation { get; set; }
         public Vector2 Size { get; set; }
 
+        /// <summary>
+        /// Invalid Bounds due to Size.ToPoint() being a scale factor not absolute
+        /// </summary>
         public Rectangle Bounds
         {
             get

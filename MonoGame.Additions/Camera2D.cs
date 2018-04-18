@@ -33,6 +33,11 @@ namespace MonoGame.Additions
             Position += Vector2.Transform(direction, Matrix.CreateRotationZ(-Rotation));
         }
 
+        public void LookAt(Vector2 position)
+        {
+            Position = position - new Vector2(Adapter.VirtualWidth / 2f, Adapter.VirtualHeight / 2f);
+        }
+
         public void Zoom(float deltaZoom)
         {
             Size *= deltaZoom;

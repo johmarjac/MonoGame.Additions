@@ -1,14 +1,14 @@
 ﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
 using MonoGame.Additions.Animations;
 using MonoGame.Additions.Animations.Systems;
 using MonoGame.Additions.Entities;
+using MonoGame.Additions.Entities.Systems;
 using MonoGame.Additions.Scenes;
 using MonoGame.Additions.Tiled;
 using MonoGame.Additions.Tiled.Systems;
 using PlatformerGame.Entities;
 using PlatformerGame.System;
+using System.Linq;
 
 namespace PlatformerGame.Scenes
 {
@@ -23,7 +23,7 @@ namespace PlatformerGame.Scenes
             ecs.Initialize();
             ecs.RegisterSystem<TiledMapSystem>();
             ecs.RegisterSystem<SpriteSheetAnimationSystem>();
-            ecs.RegisterSystem<PlayerController>();
+            ecs.RegisterSystem<PlayerController>();          
         }
 
         public override void LoadContent()

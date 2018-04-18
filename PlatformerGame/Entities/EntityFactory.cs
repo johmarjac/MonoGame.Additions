@@ -1,6 +1,8 @@
-﻿using MonoGame.Additions.Animations;
+﻿using Microsoft.Xna.Framework;
+using MonoGame.Additions.Animations;
 using MonoGame.Additions.Entities;
 using MonoGame.Additions.Entities.Components;
+using MonoGame.Additions.Entities.Systems;
 using MonoGame.Additions.Tiled;
 using MonoGame.Additions.Tiled.Components;
 using PlatformerGame.Components;
@@ -18,10 +20,14 @@ namespace PlatformerGame.Entities
         {
             var entity = Ecs.CreateEntity<Player>();
 
-            entity.Attach<TransformComponent>();
+            var transform = entity.Attach<TransformComponent>();
+            //transform.Position = new Vector2(32, 256);
+            transform.Size = new Vector2(0.5f, 0.5f);
 
             entity.Attach<SpriteSheetAnimationComponent>()
                 .Animations = playerAnimations;
+
+            entity.Attach<RigidbodyComponent>();
 
             entity.Attach<PlayerComponent>();
 
