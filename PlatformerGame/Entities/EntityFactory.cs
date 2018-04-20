@@ -22,7 +22,7 @@ namespace PlatformerGame.Entities
 
             var transform = entity.Attach<TransformComponent>();
             //transform.Position = new Vector2(32, 256);
-            transform.Size = new Vector2(0.5f, 0.5f);
+            //transform.Scale = 0.5f;
 
             entity.Attach<SpriteSheetAnimationComponent>()
                 .Animations = playerAnimations;

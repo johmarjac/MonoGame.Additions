@@ -35,8 +35,8 @@ namespace MonoGame.Additions.Animations.Systems
             
             var transformMatrix = transformComponent.TransformMatrix;
             if (camera != null)
-                transformMatrix = Matrix.Multiply(camera.GetViewMatrix(), transformMatrix);
-            
+                transformMatrix *= /*Matrix.Multiply(*/camera.GetViewMatrix()/*, transformMatrix)*/;
+
             _renderer.Draw(animationsComponent.Animations, ref transformMatrix);
 
             base.DrawEntity(entity, gameTime);

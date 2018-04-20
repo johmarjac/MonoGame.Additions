@@ -44,7 +44,7 @@ namespace PlatformerGame.System
 
             var camera = Game.Services.GetService<Camera2D>();
             if (camera != null)
-                camera.LookAt(transform.Position + (new Vector2(animations.Animations.SpriteSheet.SpriteWidth, animations.Animations.SpriteSheet.SpriteHeight)) * 0.5f);
+                camera.LookAt(transform.Position);
         }
 
     }

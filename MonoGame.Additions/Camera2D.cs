@@ -9,7 +9,7 @@ namespace MonoGame.Additions
         {
             Position = Vector2.Zero;
             Rotation = 0;
-            Size = Vector2.One;
+            Scale = 1;
             Adapter = adapter;
         }
 
@@ -25,7 +25,7 @@ namespace MonoGame.Additions
             return
                 Matrix.CreateTranslation(new Vector3(-Position, 0f)) *
                 Matrix.CreateRotationZ(Rotation) *
-                Matrix.CreateScale(Size.X, Size.Y, 1);
+                Matrix.CreateScale(Scale, Scale, 1);
         }
 
         public void Move(Vector2 direction)
@@ -40,12 +40,12 @@ namespace MonoGame.Additions
 
         public void Zoom(float deltaZoom)
         {
-            Size *= deltaZoom;
+            Scale *= deltaZoom;
         }
 
         public void SetZoom(float zoom)
         {
-            Size = new Vector2(zoom, zoom);
+            Scale = zoom;
         }
 
         public Vector2 ScreenToWorld(Vector2 screenPos)
@@ -64,17 +64,8 @@ namespace MonoGame.Additions
 
         public Vector2 Position { get; set; }
         public float Rotation { get; set; }
-        public Vector2 Size { get; set; }
-
-        public Rectangle Bounds
-        {
-            get
-            {
-                return
-                    new Rectangle(Position.ToPoint(), Size.ToPoint());
-            }
-        }
-        
+        public float Scale { get; set; }
+                
         public ViewportAdapter Adapter { get; }
     }
 }

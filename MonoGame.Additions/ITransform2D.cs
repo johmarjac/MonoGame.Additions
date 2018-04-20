@@ -2,10 +2,10 @@
 
 namespace MonoGame.Additions
 {
-    public interface ITransform2D : IRectangular
+    public interface ITransform2D
     {
         Vector2 Position { get; }
         float Rotation { get; }
-        Vector2 Size { get; }
+        float Scale { get; }
     }
 }

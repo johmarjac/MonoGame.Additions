@@ -28,7 +28,7 @@ namespace PlatformerGame.Scenes
 
         public override void LoadContent()
         {
-            Level = ef.CreateLevel(Content.Load<TiledMap>("Levels/TestLevel"));
+            //Level = ef.CreateLevel(Content.Load<TiledMap>("Levels/TestLevel"));
             Player = ef.CreatePlayer(Content.Load<SpriteSheetAnimations>("Animations/Player"));
             
             base.LoadContent();

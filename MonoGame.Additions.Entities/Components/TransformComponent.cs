@@ -8,7 +8,7 @@ namespace MonoGame.Additions.Entities.Components
         {
             Position = Vector2.Zero;
             Rotation = 0;
-            Size = Vector2.One;
+            Scale = 1;
         }
 
         public void Move(Vector2 delta)
@@ -18,19 +18,8 @@ namespace MonoGame.Additions.Entities.Components
 
         public Vector2 Position { get; set; }
         public float Rotation { get; set; }
-        public Vector2 Size { get; set; }
-
-        /// <summary>
-        /// Invalid Bounds due to Size.ToPoint() being a scale factor not absolute
-        /// </summary>
-        public Rectangle Bounds
-        {
-            get
-            {
-                return new Rectangle(Position.ToPoint(), Size.ToPoint());
-            }
-        }
-
+        public float Scale { get; set; }
+        
         public Matrix TransformMatrix
         {
             get
@@ -38,7 +27,7 @@ namespace MonoGame.Additions.Entities.Components
                 return
                     Matrix.CreateTranslation(new Vector3(Position, 0)) *
                     Matrix.CreateRotationZ(Rotation) *
-                    Matrix.CreateScale(Size.X, Size.Y, 1f);
+                    Matrix.CreateScale(Scale, Scale, 1f);
             }
         }
     }

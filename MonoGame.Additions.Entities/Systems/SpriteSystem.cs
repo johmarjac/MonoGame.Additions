@@ -37,7 +37,7 @@ namespace MonoGame.Additions.Entities.Systems
                 Color.White,
                 transform.Rotation,
                 Vector2.Zero,
-                transform.Size,
+                transform.Scale,
                 sprite.Sprite.Effect, 1f);
 
             spriteBatch.End();
